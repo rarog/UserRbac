@@ -1,31 +1,35 @@
 {
-    "name": "rarog/user-rbac",
-    "description": "A Zend Framework 2 module to easily integrate ZfcUser and ZfcRbac",
-    "type": "library",
-    "license": "MIT",
-    "keywords": [
-        "zf2",
-        "module",
-        "zendframework"
-    ],
-    "homepage": "https://github.com/rarog/UserRbac",
-    "authors": [
-        {
-            "name": "ojhaujjwal",
-            "email": "bring2uo@gmail.com"
-        }
-    ],
-    "require": {
-        "php": "^5.6 || ^7.0",
-        "zf-commons/zfc-user": "2.x-dev#43518844028cb0e02aec7ceadb199390e123615c",
-        "zf-commons/zfc-rbac": "^2.6"
-    },
-    "require-dev": {
-        "phpunit/phpunit": "4.*"
-    },
-    "autoload": {
-        "psr-4": {
-            "UserRbac\\": "src/"
-        }
-    }
+	"name" : "rarog/user-rbac",
+	"description" : "A Zend Framework module to easily integrate ZfcUser and ZfcRbac",
+	"type" : "library",
+	"license" : "MIT",
+	"keywords" : [
+		"zf2",
+		"module",
+		"zendframework",
+		"zf3"
+	],
+	"homepage" : "https://github.com/rarog/UserRbac",
+	"authors" : [{
+			"name" : "ojhaujjwal",
+			"email" : "bring2uo@gmail.com"
+		}, {
+			"name" : "Andrej Sinicyn",
+			"email" : "rarog@gmail.com"
+		}
+	],
+	"require" : {
+		"php" : "^5.6 || ^7.0",
+		"zf-commons/zfc-user" : "2.x-dev#43518844028cb0e02aec7ceadb199390e123615c",
+		"zf-commons/zfc-rbac" : "^2.6"
+	},
+	"require-dev" : {
+		"phpunit/phpunit" : "4.*"
+	},
+	"autoload" : {
+		"psr-4" : {
+			"UserRbac\\" : "src/"
+		}
+	},
+	"minimum-stability" : "dev"
 }

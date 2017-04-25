@@ -6,7 +6,7 @@
  * drop this config file in it and change the values as you wish.
  */
 
-$options = array(
+$options = [
     /**
      * Table name of user role linker
      *
@@ -37,12 +37,12 @@ $options = array(
      * Default: UserRbac\Entity\UserRoleLinker
      */
     //'user_role_linker_entity_class' => 'UserRbac\Entity\UserRoleLinker',
-);
+];
 
 /**
  * You do not need to edit below this line
  */
 
-return array(
+return [
     'user_rbac' => $options
-);
+];
