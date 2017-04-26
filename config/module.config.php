@@ -9,5 +9,5 @@ return [
             'previous_uri_query_key'         => 'redirect'
         ],
     ],
-    'user_rbac' => []
+    'user_rbac' => [],
 ];
