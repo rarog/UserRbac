@@ -1,20 +1,22 @@
 <?php
 namespace UserRbac\Factory;
 
-use Zend\ServiceManager\ServiceLocatorInterface;
-use Zend\ServiceManager\FactoryInterface;
+use Interop\Container\ContainerInterface;
 use UserRbac\Identity\IdentityProvider;
+use Zend\ServiceManager\FactoryInterface;
 
 class IdentityProviderFactory implements FactoryInterface
 {
     /**
      * Gets identity provider
      *
-     * @param  ServiceLocatorInterface $serviceLocator
+     * @param  ContainerInterface $container
+     * @param  string             $requestedName
+     * @param  null|array         $options
      * @return IdentityProvider
      */
-    public function createService(ServiceLocatorInterface $serviceLocator)
+    public function __invoke(ContainerInterface $container, $requestedName, array $options = null)
     {
-        return new IdentityProvider($serviceLocator->get('UserRbac\Identity\IdentityRoleProvider'));
+        return new IdentityProvider($container->get('UserRbac\Identity\IdentityRoleProvider'));
     }
 }
