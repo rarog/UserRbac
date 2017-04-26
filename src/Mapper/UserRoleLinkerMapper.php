@@ -4,7 +4,7 @@ namespace UserRbac\Mapper;
 
 use UserRbac\Entity\UserRoleLinkerInterface;
 use Zend\Db\Sql\Select;
-use Zend\Stdlib\Hydrator\HydratorInterface;
+use Zend\Hydrator\HydratorInterface;
 use ZfcUser\Entity\User;
 use ZfcUser\Entity\UserInterface;
 use ZfcUser\Mapper\AbstractDbMapper;
