@@ -1,6 +1,7 @@
 <?php
 namespace UserRbac\Factory;
 
+use Interop\Container\ContainerInterface;
 use UserRbac\Options\ModuleOptions;
 use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
@@ -28,6 +29,6 @@ class ModuleOptionsFactory implements FactoryInterface
      */
     public function createService(ServiceLocatorInterface $serviceLocator)
     {
-        return new ModuleOptions($serviceLocator->get('Config')['user_rbac']);
+        return $this->__invoke($serviceLocator, null);
     }
 }

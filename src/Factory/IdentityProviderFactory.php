@@ -29,6 +29,6 @@ class IdentityProviderFactory implements FactoryInterface
      */
     public function createService(ServiceLocatorInterface $serviceLocator)
     {
-        return new IdentityProvider($serviceLocator->get('UserRbac\Identity\IdentityRoleProvider'));
+        return $this->__invoke($serviceLocator, null);
     }
 }

@@ -2,6 +2,7 @@
 
 namespace UserRbac\Factory;
 
+use Interop\Container\ContainerInterface;
 use UserRbac\View\Strategy\SmartRedirectStrategy;
 use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
@@ -30,6 +31,6 @@ class SmartRedirectStrategyFactory implements FactoryInterface
      */
     public function createService(ServiceLocatorInterface $serviceLocator)
     {
-        return new SmartRedirectStrategy($serviceLocator->get('zfcuser_auth_service'));
+        return $this->__invoke($serviceLocator, null);
     }
 }
