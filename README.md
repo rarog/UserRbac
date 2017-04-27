@@ -7,10 +7,10 @@ UserRbac
 
 A Zend Framework module to easily integrate [ZfcUser](https://github.com/ZF-Commons/ZfcUser) and [ZfcRbac](https://github.com/ZF-Commons/zfc-rbac)
 
-##Introduction
+## Introduction
 Are your tired of doing tedious work of integrating ZfcUser and ZfcRbac again and again? Then, you are in the right place. This module comes to save us. This module, simply, gets roles of a user from the database and passes it to the ZfcRbac. You only need to focus on the domain logic of your application. No more repetive tasks.
 
-##Versions
+## Versions
 Please use below table to figure out what version of ZfcUser you should use.
 
 | UserRbac version | Supported Zend Framework version |
