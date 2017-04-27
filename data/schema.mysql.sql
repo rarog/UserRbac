@@ -4,4 +4,4 @@
   PRIMARY KEY (`user_id`,`role_id`),
   KEY `user_role_linker_fk1_idx` (`user_id`),
   CONSTRAINT `user_role_linker_fk1` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
