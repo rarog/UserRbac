@@ -31,10 +31,10 @@ class UserRoleLinkerMapper extends AbstractDbMapper implements UserRoleLinkerMap
     /**
      * Finds roles of a user by his/her id
      *
-     * @param  int                                        $userId
+     * @param  int $userId
      * @return Zend\Db\ResultSet\HydratingResultSet|array
      */
-    public function findByUserId($userId)
+    public function findByUserId(int $userId)
     {
         $select = $this->getSelect();
         $select->where(array('user_id' => $userId));
@@ -54,10 +54,10 @@ class UserRoleLinkerMapper extends AbstractDbMapper implements UserRoleLinkerMap
     /**
      * Finds users with a specific role
      *
-     * @param  string                               $roleId
+     * @param  string $roleId
      * @return Zend\Db\ResultSet\HydratingResultSet
      */
-    public function findByRoleId($roleId)
+    public function findByRoleId(string $roleId)
     {
         $select = $this->getSelect($this->getUserTableName());
         $select->where(array($this->getTableName() . '.role_id' => $roleId));
@@ -103,7 +103,7 @@ class UserRoleLinkerMapper extends AbstractDbMapper implements UserRoleLinkerMap
     /**
      * Checks if the provided entity is instance of UserRbac\Entity\UserRoleLinkerInterface
      *
-     * @param  mixed                              $userRoleLinker
+     * @param  mixed $userRoleLinker
      * @return void
      * @throws Exception\InvalidArgumentException
      */
