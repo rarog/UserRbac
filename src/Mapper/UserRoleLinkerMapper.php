@@ -34,7 +34,7 @@ class UserRoleLinkerMapper extends AbstractDbMapper implements UserRoleLinkerMap
      * @param  int $userId
      * @return Zend\Db\ResultSet\HydratingResultSet|array
      */
-    public function findByUserId(int $userId)
+    public function findByUserId($userId)
     {
         $select = $this->getSelect();
         $select->where(array('user_id' => $userId));
@@ -57,7 +57,7 @@ class UserRoleLinkerMapper extends AbstractDbMapper implements UserRoleLinkerMap
      * @param  string $roleId
      * @return Zend\Db\ResultSet\HydratingResultSet
      */
-    public function findByRoleId(string $roleId)
+    public function findByRoleId($roleId)
     {
         $select = $this->getSelect($this->getUserTableName());
         $select->where(array($this->getTableName() . '.role_id' => $roleId));
