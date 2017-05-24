@@ -15,8 +15,7 @@ Please use below table to figure out what version of ZfcUser you should use.
 
 | UserRbac version | Supported Zend Framework version |
 |------------------|----------------------------------|
-| 0.x              | <= 2.5                           |
-| 1.x              | >= 2.6 or 3.x                    |
+| 1.x              | >=        3.x                    |
 
 ## Features
 1. No need to write code for integrating ZfcUser and ZfcRbac
@@ -27,10 +26,7 @@ Please use below table to figure out what version of ZfcUser you should use.
 * Add `"rarog/user-rbac": "dev-master",` to your composer.json and run `php composer.phar update`
 * Import the schema for corresponding database in `data` folder
 * Enable this module in `config/application.config.php`
-* Copy file located in `vendor/rarog/user-rbac/config/user-rbac.global.php.dist` to `./config/autoload/user-rbac.global.php` and change the values as you wish
-
-## Important notice
-There is no release from the 2.x branch of [ZfcUser](https://github.com/ZF-Commons/ZfcUser/tree/2.x), so UserRbac 1.x requires the latest HEAD of its branch as of now (commit 4351884). There might, backward compatibility might be broken in the future, so UserRbac will be updated accordingly.
+* Copy file located in `vendor/rarog/user-rbac/config/user-rbac.global.php.dist` to `./config/autoload/user-rbac.global.php` and change the values as you wish.
 
 ## What it does
 This module registers an identity provider and provides some configuration to ZfcRbac. So, you don't need to create your own identity provider. See [`config/module.config.php`](https://github.com/rarog/UserRbac/blob/master/config/module.config.php#L4).
