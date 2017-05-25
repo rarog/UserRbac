@@ -75,17 +75,6 @@ class UserRoleLinkerMapper extends AbstractDbMapper implements UserRoleLinkerMap
     }
 
     /**
-     * Deletes a role of a user
-     *
-     * @param  UserRoleLinkerInterface $userRoleLinker
-     * @return mixed
-     */
-    public function delete(UserRoleLinkerInterface $userRoleLinker, $tableName = null)
-    {
-        return parent::delete(array('user_id' => $userRoleLinker->getUserId(), 'role_id' => $userRoleLinker->getRoleId()));
-    }
-
-    /**
      * Sets table name
      *
      * @param  string $tableName

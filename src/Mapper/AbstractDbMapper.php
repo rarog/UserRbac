@@ -158,16 +158,18 @@ abstract class AbstractDbMapper extends EventProvider
     }
 
     /**
-     * @param string|array|\Closure $where
+     * Deletes a role of a user
+     *
+     * @param UserRoleLinkerInterface $userRoleLinker
      * @param string|TableIdentifier|null $tableName
      * @return ResultInterface
      */
-    protected function delete($where, $tableName = null)
+    protected function delete(UserRoleLinkerInterface $userRoleLinker, $tableName = null)
     {
         $tableName = $tableName ?: $this->tableName;
         $sql = $this->getSql()->setTable($tableName);
         $delete = $sql->delete();
-        $delete->where($where);
+        $delete->where(['user_id' => $userRoleLinker->getUserId(), 'role_id' => $userRoleLinker->getRoleId()]);
         $statement = $sql->prepareStatementForSqlObject($delete);
         return $statement->execute();
     }
