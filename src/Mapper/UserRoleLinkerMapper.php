@@ -7,7 +7,7 @@ use Zend\Db\Sql\Select;
 use Zend\Hydrator\HydratorInterface;
 use ZfcUser\Entity\User;
 use ZfcUser\Entity\UserInterface;
-use ZfcUser\Mapper\AbstractDbMapper;
+use UserRbac\Mapper\AbstractDbMapper;
 use ZfcUser\Mapper\UserHydrator;
 use ZfcUser\Options\ModuleOptions as ZfcUserOptions;
 
@@ -75,43 +75,14 @@ class UserRoleLinkerMapper extends AbstractDbMapper implements UserRoleLinkerMap
     }
 
     /**
-     * Add a new role of a user
-     *
-     * @param  UserRbac\Entity\UserRoleLinkerInterface $userRoleLinker
-     * @return mixed
-     */
-    public function insert($userRoleLinker, $tableName = null, HydratorInterface $hydrator = null)
-    {
-        $this->checkEntity($userRoleLinker);
-
-        return parent::insert($userRoleLinker);
-    }
-
-    /**
      * Deletes a role of a user
      *
      * @param  UserRoleLinkerInterface $userRoleLinker
      * @return mixed
      */
-    public function delete($userRoleLinker, $tableName = null)
+    public function delete(UserRoleLinkerInterface $userRoleLinker, $tableName = null)
     {
-        $this->checkEntity($userRoleLinker);
-
         return parent::delete(array('user_id' => $userRoleLinker->getUserId(), 'role_id' => $userRoleLinker->getRoleId()));
-    }
-
-    /**
-     * Checks if the provided entity is instance of UserRbac\Entity\UserRoleLinkerInterface
-     *
-     * @param  mixed $userRoleLinker
-     * @return void
-     * @throws Exception\InvalidArgumentException
-     */
-    protected function checkEntity($userRoleLinker)
-    {
-        if (!$userRoleLinker instanceof UserRoleLinkerInterface) {
-            throw new Exception\InvalidArgumentException('Instance of UserRbac\Entity\UserRoleLinkerInterface expected');
-        }
     }
 
     /**
