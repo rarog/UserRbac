@@ -2,12 +2,11 @@
 
 namespace UserRbac\Mapper;
 
-use UserRbac\Entity\UserRoleLinkerInterface;
+use UserRbac\Mapper\AbstractDbMapper;
 use Zend\Db\Sql\Select;
 use Zend\Hydrator\HydratorInterface;
 use ZfcUser\Entity\User;
 use ZfcUser\Entity\UserInterface;
-use UserRbac\Mapper\AbstractDbMapper;
 use ZfcUser\Mapper\UserHydrator;
 use ZfcUser\Options\ModuleOptions as ZfcUserOptions;
 

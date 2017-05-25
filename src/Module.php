@@ -23,14 +23,14 @@ class Module implements
     {
         return [
             'factories' => [
-                'UserRbac\ModuleOptions' => 'UserRbac\Factory\ModuleOptionsFactory',
-                'UserRbac\UserRoleLinkerMapper' => 'UserRbac\Factory\UserRoleLinkerMapperFactory',
-                'UserRbac\Identity\IdentityProvider' => 'UserRbac\Factory\IdentityProviderFactory',
-                'UserRbac\Identity\IdentityRoleProvider' => 'UserRbac\Factory\IdentityRoleProviderFactory',
-                'UserRbac\View\Strategy\SmartRedirectStrategy' => 'UserRbac\Factory\SmartRedirectStrategyFactory',
+                'UserRbac\ModuleOptions' => \UserRbac\Factory\ModuleOptionsFactory::class,
+                'UserRbac\UserRoleLinkerMapper' => \UserRbac\Factory\UserRoleLinkerMapperFactory::class,
+                'UserRbac\Identity\IdentityProvider' => \UserRbac\Factory\IdentityProviderFactory::class,
+                'UserRbac\Identity\IdentityRoleProvider' => \UserRbac\Factory\IdentityRoleProviderFactory::class,
+                'UserRbac\View\Strategy\SmartRedirectStrategy' => \UserRbac\Factory\SmartRedirectStrategyFactory::class,
             ],
             'aliases' => [
-                'UserRbac\DbAdapter' => 'Zend\Db\Adapter\Adapter',
+                'UserRbac\DbAdapter' => \Zend\Db\Adapter\Adapter::class,
                 'Zend\Authentication\AuthenticationService' => 'zfcuser_auth_service',
             ]
         ];
