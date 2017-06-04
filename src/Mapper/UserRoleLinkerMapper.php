@@ -2,6 +2,7 @@
 
 namespace UserRbac\Mapper;
 
+use UserRbac\Entity\UserRoleLinkerInterface;
 use UserRbac\Mapper\AbstractDbMapper;
 use Zend\Db\Sql\Select;
 use Zend\Hydrator\HydratorInterface;
@@ -150,5 +151,23 @@ class UserRoleLinkerMapper extends AbstractDbMapper implements UserRoleLinkerMap
     public function getZfcUserHydrator()
     {
         return $this->zfcUserHydrator;
+    }
+    
+    /**
+     * {@inheritDoc}
+     * @see \UserRbac\Mapper\AbstractDbMapper::insert()
+     */
+    public function insert(UserRoleLinkerInterface $entity, $tableName = null, HydratorInterface $hydrator = null)
+    {
+        return parent::insert($entity, $tableName, $hydrator);
+    }
+    
+    /**
+     * {@inheritDoc}
+     * @see \UserRbac\Mapper\AbstractDbMapper::delete()
+     */
+    public function delete(UserRoleLinkerInterface $userRoleLinker, $tableName = null)
+    {
+        return parent::delete($userRoleLinker, $tableName);
     }
 }
