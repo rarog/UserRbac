@@ -4,7 +4,6 @@
 	"type" : "library",
 	"license" : "MIT",
 	"keywords" : [
-		"zf2",
 		"module",
 		"zendframework",
 		"zf3"
