@@ -3,6 +3,8 @@ namespace UserRbac\Factory;
 
 use Interop\Container\ContainerInterface;
 use UserRbac\Mapper\UserRoleLinkerMapper;
+use UserRbac\Options\ModuleOptions;
+use Zend\Db\Adapter\Adapter as DbAdapter;
 use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
 
@@ -19,10 +21,10 @@ class UserRoleLinkerMapperFactory implements FactoryInterface
     public function __invoke(ContainerInterface $container, $requestedName, array $options = null)
     {
         $mapper = new UserRoleLinkerMapper;
-        $options = $container->get('UserRbac\ModuleOptions');
+        $options = $container->get(ModuleOptions::class);
         $class = $options->getUserRoleLinkerEntityClass();
         $mapper->setEntityPrototype(new $class);
-        $mapper->setDbAdapter($container->get('UserRbac\DbAdapter'));
+        $mapper->setDbAdapter($container->get(DbAdapter::class));
         $mapper->setTableName($options->getTableName());
 
         return $mapper;

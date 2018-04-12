@@ -23,7 +23,6 @@ class Module implements
     {
         return [
             'factories' => [
-                'UserRbac\ModuleOptions' => \UserRbac\Factory\ModuleOptionsFactory::class,
                 Options\ModuleOptions::class => Factory\ModuleOptionsFactory::class,
                 Mapper\UserRoleLinkerMapper::class => Factory\UserRoleLinkerMapperFactory::class,
                 'UserRbac\Identity\IdentityProvider' => \UserRbac\Factory\IdentityProviderFactory::class,
@@ -31,7 +30,6 @@ class Module implements
                 'UserRbac\View\Strategy\SmartRedirectStrategy' => \UserRbac\Factory\SmartRedirectStrategyFactory::class,
             ],
             'aliases' => [
-                'UserRbac\DbAdapter' => \Zend\Db\Adapter\Adapter::class,
                 'Zend\Authentication\AuthenticationService' => 'zfcuser_auth_service',
             ]
         ];

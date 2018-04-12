@@ -2,8 +2,10 @@
 namespace UserRbacTest\Factory;
 
 use UserRbac\Factory\UserRoleLinkerMapperFactory;
-use Zend\ServiceManager\ServiceManager;
+use UserRbac\Mapper\UserRoleLinkerMapper;
 use UserRbac\Options\ModuleOptions;
+use Zend\Db\Adapter\Adapter as DbAdapter;
+use Zend\ServiceManager\ServiceManager;
 
 class UserRoleLinkerMapperFactoryTest extends \PHPUnit\Framework\TestCase
 {
@@ -11,12 +13,12 @@ class UserRoleLinkerMapperFactoryTest extends \PHPUnit\Framework\TestCase
     {
         $factory = new UserRoleLinkerMapperFactory;
         $serviceManager = new ServiceManager;
-        $serviceManager->setService('UserRbac\ModuleOptions', new ModuleOptions);
-        $adapter = $this->getMockBuilder('Zend\Db\Adapter\Adapter')
+        $serviceManager->setService(ModuleOptions::class, new ModuleOptions);
+        $adapter = $this->getMockBuilder(DbAdapter::class)
             ->disableOriginalConstructor()
             ->getMock();
-        $serviceManager->setService('UserRbac\DbAdapter', $adapter);
+        $serviceManager->setService(DbAdapter::class, $adapter);
 
-        $this->assertInstanceOf('UserRbac\Mapper\UserRoleLinkerMapper', $factory->createService($serviceManager));
+        $this->assertInstanceOf(UserRoleLinkerMapper::class, $factory->createService($serviceManager));
     }
 }
