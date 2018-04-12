@@ -24,7 +24,8 @@ class Module implements
         return [
             'factories' => [
                 'UserRbac\ModuleOptions' => \UserRbac\Factory\ModuleOptionsFactory::class,
-                'UserRbac\UserRoleLinkerMapper' => \UserRbac\Factory\UserRoleLinkerMapperFactory::class,
+                Options\ModuleOptions::class => Factory\ModuleOptionsFactory::class,
+                Mapper\UserRoleLinkerMapper::class => Factory\UserRoleLinkerMapperFactory::class,
                 'UserRbac\Identity\IdentityProvider' => \UserRbac\Factory\IdentityProviderFactory::class,
                 'UserRbac\Identity\IdentityRoleProvider' => \UserRbac\Factory\IdentityRoleProviderFactory::class,
                 'UserRbac\View\Strategy\SmartRedirectStrategy' => \UserRbac\Factory\SmartRedirectStrategyFactory::class,
