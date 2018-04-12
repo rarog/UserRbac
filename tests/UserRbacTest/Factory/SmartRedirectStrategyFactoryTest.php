@@ -2,6 +2,7 @@
 namespace UserRbacTest\Factory;
 
 use UserRbac\Factory\SmartRedirectStrategyFactory;
+use UserRbac\View\Strategy\SmartRedirectStrategy;
 use Zend\Authentication\AuthenticationService;
 use Zend\ServiceManager\ServiceManager;
 
@@ -13,6 +14,6 @@ class SmartRedirectStrategyFactoryTest extends \PHPUnit\Framework\TestCase
         $serviceManager = new ServiceManager;
         $serviceManager->setService('zfcuser_auth_service', new AuthenticationService);
 
-        $this->assertInstanceOf('UserRbac\View\Strategy\SmartRedirectStrategy', $factory->createService($serviceManager));
+        $this->assertInstanceOf(SmartRedirectStrategy::class, $factory->createService($serviceManager));
     }
 }

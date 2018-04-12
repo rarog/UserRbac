@@ -3,6 +3,7 @@ namespace UserRbac\Factory;
 
 use Interop\Container\ContainerInterface;
 use UserRbac\Identity\IdentityProvider;
+use UserRbac\Identity\IdentityRoleProvider;
 use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
 
@@ -18,7 +19,7 @@ class IdentityProviderFactory implements FactoryInterface
      */
     public function __invoke(ContainerInterface $container, $requestedName, array $options = null)
     {
-        return new IdentityProvider($container->get('UserRbac\Identity\IdentityRoleProvider'));
+        return new IdentityProvider($container->get(IdentityRoleProvider::class));
     }
 
     /**

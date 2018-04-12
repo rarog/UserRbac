@@ -1,7 +1,9 @@
 <?php
+namespace UserRbac;
+
 return [
     'zfc_rbac' => [
-        'identity_provider' => 'UserRbac\Identity\IdentityProvider',
+        'identity_provider' => Identity\IdentityProvider::class,
         'redirect_strategy' => [
             'redirect_to_route_connected' => 'zfcuser',
             'redirect_to_route_disconnected' => 'zfcuser/login',

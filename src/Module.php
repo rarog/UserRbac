@@ -25,9 +25,9 @@ class Module implements
             'factories' => [
                 Options\ModuleOptions::class => Factory\ModuleOptionsFactory::class,
                 Mapper\UserRoleLinkerMapper::class => Factory\UserRoleLinkerMapperFactory::class,
-                'UserRbac\Identity\IdentityProvider' => \UserRbac\Factory\IdentityProviderFactory::class,
-                'UserRbac\Identity\IdentityRoleProvider' => \UserRbac\Factory\IdentityRoleProviderFactory::class,
-                'UserRbac\View\Strategy\SmartRedirectStrategy' => \UserRbac\Factory\SmartRedirectStrategyFactory::class,
+                Identity\IdentityProvider::class => Factory\IdentityProviderFactory::class,
+                Identity\IdentityRoleProvider::class => Factory\IdentityRoleProviderFactory::class,
+                View\Strategy\SmartRedirectStrategy::class => Factory\SmartRedirectStrategyFactory::class,
             ],
             'aliases' => [
                 'Zend\Authentication\AuthenticationService' => 'zfcuser_auth_service',

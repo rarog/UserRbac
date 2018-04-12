@@ -2,6 +2,8 @@
 namespace UserRbacTest\Factory;
 
 use UserRbac\Factory\IdentityProviderFactory;
+use UserRbac\Identity\IdentityProvider;
+use UserRbac\Identity\IdentityRoleProvider;
 use Zend\ServiceManager\ServiceManager;
 
 class IdentityProviderFactoryTest extends \PHPUnit\Framework\TestCase
@@ -10,10 +12,10 @@ class IdentityProviderFactoryTest extends \PHPUnit\Framework\TestCase
     {
         $factory = new IdentityProviderFactory;
         $serviceManager = new ServiceManager;
-        $identityRoleProvider = $this->getMockBuilder('UserRbac\Identity\IdentityRoleProvider')
+        $identityRoleProvider = $this->getMockBuilder(IdentityRoleProvider::class)
             ->disableOriginalConstructor()
             ->getMock();
-        $serviceManager->setService('UserRbac\Identity\IdentityRoleProvider', $identityRoleProvider);
-        $this->assertInstanceOf('UserRbac\Identity\IdentityProvider', $factory->createService($serviceManager));
+        $serviceManager->setService(IdentityRoleProvider::class, $identityRoleProvider);
+        $this->assertInstanceOf(IdentityProvider::class, $factory->createService($serviceManager));
     }
 }
