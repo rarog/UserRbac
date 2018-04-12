@@ -3,10 +3,8 @@
 namespace UserRbac\Mapper;
 
 use UserRbac\Entity\UserRoleLinkerInterface;
-use UserRbac\Mapper\AbstractDbMapper;
 use Zend\Db\Sql\Select;
 use Zend\Hydrator\HydratorInterface;
-use ZfcUser\Entity\User;
 use ZfcUser\Entity\UserInterface;
 use ZfcUser\Mapper\UserHydrator;
 use ZfcUser\Options\ModuleOptions as ZfcUserOptions;
@@ -32,7 +30,7 @@ class UserRoleLinkerMapper extends AbstractDbMapper implements UserRoleLinkerMap
      * Finds roles of a user by his/her id
      *
      * @param  int $userId
-     * @return Zend\Db\ResultSet\HydratingResultSet|array
+     * @return \Zend\Db\ResultSet\HydratingResultSet|array
      */
     public function findByUserId($userId)
     {
@@ -55,7 +53,7 @@ class UserRoleLinkerMapper extends AbstractDbMapper implements UserRoleLinkerMap
      * Finds users with a specific role
      *
      * @param  string $roleId
-     * @return Zend\Db\ResultSet\HydratingResultSet
+     * @return \Zend\Db\ResultSet\HydratingResultSet
      */
     public function findByRoleId($roleId)
     {
@@ -152,7 +150,7 @@ class UserRoleLinkerMapper extends AbstractDbMapper implements UserRoleLinkerMap
     {
         return $this->zfcUserHydrator;
     }
-    
+
     /**
      * {@inheritDoc}
      * @see \UserRbac\Mapper\AbstractDbMapper::insert()
@@ -161,7 +159,7 @@ class UserRoleLinkerMapper extends AbstractDbMapper implements UserRoleLinkerMap
     {
         return parent::insert($entity, $tableName, $hydrator);
     }
-    
+
     /**
      * {@inheritDoc}
      * @see \UserRbac\Mapper\AbstractDbMapper::delete()
