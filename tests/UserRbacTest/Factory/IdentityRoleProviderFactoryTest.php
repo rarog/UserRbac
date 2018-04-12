@@ -20,7 +20,7 @@ class IdentityRoleProviderFactoryTest extends \PHPUnit_Framework_TestCase
             ->method('hasIdentity')
             ->will($this->returnValue(false));
         $serviceManager->setService('zfcuser_auth_service', $authenticationService);
-        $identityRoleProvider = $factory->createService($serviceManager);
+        $identityRoleProvider = $factory($serviceManager, null);
         $this->assertInstanceOf('UserRbac\Identity\IdentityRoleProvider', $identityRoleProvider);
         $this->assertEquals(null, $identityRoleProvider->getDefaultIdentity());
         
@@ -33,7 +33,7 @@ class IdentityRoleProviderFactoryTest extends \PHPUnit_Framework_TestCase
         $authenticationService->expects($this->any())
             ->method('getIdentity')
             ->will($this->returnValue($user = new User));
-        $identityRoleProvider = $factory->createService($serviceManager);
+        $identityRoleProvider = $factory($serviceManager, null);
         $this->assertInstanceOf('UserRbac\Identity\IdentityRoleProvider', $identityRoleProvider);
         $this->assertEquals($user, $identityRoleProvider->getDefaultIdentity());
     }
