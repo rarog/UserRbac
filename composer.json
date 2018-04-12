@@ -23,12 +23,15 @@
 		"zf-commons/zfc-rbac" : "^2.6"
 	},
 	"require-dev" : {
-		"phpunit/phpunit" : "4.*"
+		"phpunit/phpunit" : "^5.0 || ^6.0"
 	},
 	"autoload" : {
 		"psr-4" : {
 			"UserRbac\\" : "src/"
 		}
 	},
-	"minimum-stability" : "stable"
+	"minimum-stability" : "stable",
+	"scripts" : {
+		"test" : "phpunit"
+	}
 }

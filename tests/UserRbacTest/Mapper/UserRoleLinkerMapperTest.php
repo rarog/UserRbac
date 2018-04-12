@@ -7,7 +7,7 @@ use UserRbac\Entity\UserRoleLinker;
 use Zend\Db\Sql\Sql;
 use Zend\Db\Sql\Select;
 
-class UserRoleLinkerMapperTest extends \PHPUnit_Framework_TestCase
+class UserRoleLinkerMapperTest extends \PHPUnit\Framework\TestCase
 {
     public function testFindByUser()
     {
@@ -22,20 +22,20 @@ class UserRoleLinkerMapperTest extends \PHPUnit_Framework_TestCase
         $sql = $this->getMockBuilder('Zend\Db\Sql\Sql')
             ->disableOriginalConstructor()
             ->getMock();
-        $stmt = $this->getMock('Zend\Db\Adapter\Driver\StatementInterface');
+        $stmt = $this->createMock('Zend\Db\Adapter\Driver\StatementInterface');
         $sql->expects($this->once())
             ->method('prepareStatementForSqlObject')
             ->will($this->returnValue($stmt));
-        
+
         $stmt->expects($this->once())
             ->method('execute')
-            ->will($this->returnValue([['user_id' => 13, 'role_id' => 'role1'], ['user_id' => 13, 'role_id' => 'role2']])); 
+            ->will($this->returnValue([['user_id' => 13, 'role_id' => 'role1'], ['user_id' => 13, 'role_id' => 'role2']]));
         $this->getMethod('setSlaveSql')->invokeArgs($mapper, [$sql]);
         $sql->expects($this->once())
             ->method('select')
-            ->will($this->returnValue(new Select)); 
+            ->will($this->returnValue(new Select));
         $resultSet =  $mapper->findByUser($user);
-        $expectedResultArray = [new UserRoleLinker($user, 'role1'), new UserRoleLinker($user, 'role2')]; 
+        $expectedResultArray = [new UserRoleLinker($user, 'role1'), new UserRoleLinker($user, 'role2')];
         $this->assertEquals(count($expectedResultArray), count($resultSet));
         foreach ($resultSet as $i => $result) {
             $this->assertEquals($expectedResultArray[$i]->getRoleId(), $result->getRoleId());
@@ -43,7 +43,7 @@ class UserRoleLinkerMapperTest extends \PHPUnit_Framework_TestCase
         }
     }
 
-    protected function getMethod($name) 
+    protected function getMethod($name)
     {
         $class = new \ReflectionClass('UserRbac\Mapper\UserRoleLinkerMapper');
         $method = $class->getMethod($name);

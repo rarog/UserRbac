@@ -4,7 +4,7 @@ namespace UserRbacTest\Factory;
 use UserRbac\Factory\ModuleOptionsFactory;
 use Zend\ServiceManager\ServiceManager;
 
-class ModuleOptionsFactoryTest extends \PHPUnit_Framework_TestCase
+class ModuleOptionsFactoryTest extends \PHPUnit\Framework\TestCase
 {
     public function testFactory()
     {

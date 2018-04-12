@@ -6,13 +6,13 @@ use UserRbac\Options\ModuleOptions;
 use ZfcUser\Entity\User;
 use UserRbac\Entity\UserRoleLinker;
 
-class IdentityRoleProviderTest extends \PHPUnit_Framework_TestCase
+class IdentityRoleProviderTest extends \PHPUnit\Framework\TestCase
 {
     public function testGetDefaultRoleOfUnauthenticatedUser()
     {
         $options = new ModuleOptions(['default_guest_role' => 'special_guest']);
         $identityRoleProvider = new IdentityRoleProvider(
-            $this->getMock('UserRbac\Mapper\UserRoleLinkerMapperInterface'),
+            $this->createMock('UserRbac\Mapper\UserRoleLinkerMapperInterface'),
             $options
         );
         $this->assertEquals(['special_guest'], $identityRoleProvider->getRoles());
@@ -21,7 +21,7 @@ class IdentityRoleProviderTest extends \PHPUnit_Framework_TestCase
     public function testGetDefaultRoleOfAuthenticatedUser()
     {
         $options = new ModuleOptions(['default_user_role' => 'default_user_role123']);
-        $mapper = $this->getMock('UserRbac\Mapper\UserRoleLinkerMapperInterface');
+        $mapper = $this->createMock('UserRbac\Mapper\UserRoleLinkerMapperInterface');
         $identityRoleProvider = new IdentityRoleProvider(
             $mapper,
             $options
@@ -37,7 +37,7 @@ class IdentityRoleProviderTest extends \PHPUnit_Framework_TestCase
     public function testGetIdentityRoles()
     {
         $options = new ModuleOptions();
-        $mapper = $this->getMock('UserRbac\Mapper\UserRoleLinkerMapperInterface');
+        $mapper = $this->createMock('UserRbac\Mapper\UserRoleLinkerMapperInterface');
         $identityRoleProvider = new IdentityRoleProvider(
             $mapper,
             $options
