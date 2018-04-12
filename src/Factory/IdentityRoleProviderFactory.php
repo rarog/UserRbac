@@ -19,7 +19,7 @@ class IdentityRoleProviderFactory implements FactoryInterface
     public function __invoke(ContainerInterface $container, $requestedName, array $options = null)
     {
         $identityRoleProvider = new IdentityRoleProvider(
-                $container->get(\UserRbac\Mapper\UserRoleLinkerMapper),
+                $container->get(\UserRbac\Mapper\UserRoleLinkerMapper::class),
                 $container->get(\UserRbac\Options\ModuleOptions::class)
                 );
         if ($container->get('zfcuser_auth_service')->hasIdentity()) {
