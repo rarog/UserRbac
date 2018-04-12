@@ -5,7 +5,7 @@ use UserRbac\Factory\UserRoleLinkerMapperFactory;
 use Zend\ServiceManager\ServiceManager;
 use UserRbac\Options\ModuleOptions;
 
-class UserRoleLinkerMapperFactoryTest extends \PHPUnit_Framework_TestCase
+class UserRoleLinkerMapperFactoryTest extends \PHPUnit\Framework\TestCase
 {
     public function testFactory()
     {

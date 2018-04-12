@@ -4,7 +4,7 @@ namespace UserRbacTest\Entity;
 use UserRbac\Entity\UserRoleLinker;
 use ZfcUser\Entity\User;
 
-class UserRoleLinkerTest extends \PHPUnit_Framework_TestCase
+class UserRoleLinkerTest extends \PHPUnit\Framework\TestCase
 {
     public function testSetterAndGetters()
     {

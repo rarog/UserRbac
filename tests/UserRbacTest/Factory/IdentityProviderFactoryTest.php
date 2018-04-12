@@ -4,7 +4,7 @@ namespace UserRbacTest\Factory;
 use UserRbac\Factory\IdentityProviderFactory;
 use Zend\ServiceManager\ServiceManager;
 
-class IdentityProviderFactoryTest extends \PHPUnit_Framework_TestCase
+class IdentityProviderFactoryTest extends \PHPUnit\Framework\TestCase
 {
     public function testFactory()
     {

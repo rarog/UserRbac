@@ -3,7 +3,7 @@ namespace UserRbacTest\Options;
 
 use UserRbac\Options\ModuleOptions;
 
-class ModuleOptionsTest extends \PHPUnit_Framework_TestCase
+class ModuleOptionsTest extends \PHPUnit\Framework\TestCase
 {
     public function testSettersGetters()
     {

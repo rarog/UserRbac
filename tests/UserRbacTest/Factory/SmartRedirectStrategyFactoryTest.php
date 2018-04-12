@@ -5,7 +5,7 @@ use UserRbac\Factory\SmartRedirectStrategyFactory;
 use Zend\Authentication\AuthenticationService;
 use Zend\ServiceManager\ServiceManager;
 
-class SmartRedirectStrategyFactoryTest extends \PHPUnit_Framework_TestCase
+class SmartRedirectStrategyFactoryTest extends \PHPUnit\Framework\TestCase
 {
     public function testFactory()
     {
