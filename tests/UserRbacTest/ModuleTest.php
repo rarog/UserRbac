@@ -1,10 +1,12 @@
 <?php
 namespace UserRbacTest;
 
+use PHPUnit\Framework\TestCase;
 use UserRbac\Module;
 
-class ModuleTest extends \PHPUnit\Framework\TestCase
+class ModuleTest extends TestCase
 {
+
     public function testConfigIsArray()
     {
         $module = new Module();

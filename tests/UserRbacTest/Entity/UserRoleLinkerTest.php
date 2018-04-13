@@ -1,10 +1,11 @@
 <?php
 namespace UserRbacTest\Entity;
 
+use PHPUnit\Framework\TestCase;
 use UserRbac\Entity\UserRoleLinker;
 use ZfcUser\Entity\User;
 
-class UserRoleLinkerTest extends \PHPUnit\Framework\TestCase
+class UserRoleLinkerTest extends TestCase
 {
     public function testSetterAndGetters()
     {

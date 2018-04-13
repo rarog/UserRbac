@@ -1,6 +1,7 @@
 <?php
 namespace UserRbacTest\Factory;
 
+use PHPUnit\Framework\TestCase;
 use UserRbac\Factory\Identity\IdentityRoleProviderFactory;
 use UserRbac\Identity\IdentityRoleProvider;
 use UserRbac\Mapper\UserRoleLinkerMapper;
@@ -8,14 +9,15 @@ use UserRbac\Options\ModuleOptions;
 use Zend\ServiceManager\ServiceManager;
 use ZfcUser\Entity\User;
 
-class IdentityRoleProviderFactoryTest extends \PHPUnit\Framework\TestCase
+class IdentityRoleProviderFactoryTest extends TestCase
 {
+
     public function testFactory()
     {
-        $factory = new IdentityRoleProviderFactory;
-        $serviceManager = new ServiceManager;
+        $factory = new IdentityRoleProviderFactory();
+        $serviceManager = new ServiceManager();
         $serviceManager->setService(UserRoleLinkerMapper::class, $this->createMock('UserRbac\Mapper\UserRoleLinkerMapperInterface'));
-        $serviceManager->setService(ModuleOptions::class, new ModuleOptions);
+        $serviceManager->setService(ModuleOptions::class, new ModuleOptions());
         $authenticationService = $this->createMock('Zend\Authentication\AuthenticationService');
         $authenticationService->expects($this->any())
             ->method('hasIdentity')
@@ -33,7 +35,7 @@ class IdentityRoleProviderFactoryTest extends \PHPUnit\Framework\TestCase
             ->will($this->returnValue(true));
         $authenticationService->expects($this->any())
             ->method('getIdentity')
-            ->will($this->returnValue($user = new User));
+            ->will($this->returnValue($user = new User()));
         $identityRoleProvider = $factory($serviceManager, null);
         $this->assertInstanceOf(IdentityRoleProvider::class, $identityRoleProvider);
         $this->assertEquals($user, $identityRoleProvider->getDefaultIdentity());
