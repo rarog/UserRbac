@@ -1,28 +1,31 @@
 <?php
-
 namespace UserRbac\Identity;
 
-use ZfcRbac\Identity\IdentityInterface;
 use UserRbac\Mapper\UserRoleLinkerMapperInterface;
-use ZfcUser\Entity\UserInterface;
 use UserRbac\Options\ModuleOptionsInterface;
+use ZfcRbac\Identity\IdentityInterface;
+use ZfcUser\Entity\UserInterface;
 
 /**
  * This class get roles of a identity
  */
 class IdentityRoleProvider implements IdentityInterface, IdentityRoleProviderInterface
 {
+
     /**
+     *
      * @var ModuleOptionsInterface
      */
     protected $moduleOptions;
 
     /**
+     *
      * @var UserRoleLinkerMapperInterface
      */
     protected $userRoleLinkerMapper;
 
     /**
+     *
      * @var UserInterface
      */
     protected $defaultIdentity;
@@ -30,14 +33,11 @@ class IdentityRoleProvider implements IdentityInterface, IdentityRoleProviderInt
     /**
      * Constructor
      *
-     * @param  UserRoleLinkerMapperInterface $userRoleLinkerMapper,
-     * @param  ModuleOptionsInterface        $moduleOptions
+     * @param UserRoleLinkerMapperInterface $userRoleLinkerMapper,
+     * @param ModuleOptionsInterface $moduleOptions
      * @return self
      */
-    public function __construct(
-        UserRoleLinkerMapperInterface $userRoleLinkerMapper,
-        ModuleOptionsInterface $moduleOptions
-    )
+    public function __construct(UserRoleLinkerMapperInterface $userRoleLinkerMapper, ModuleOptionsInterface $moduleOptions)
     {
         $this->userRoleLinkerMapper = $userRoleLinkerMapper;
         $this->moduleOptions = $moduleOptions;
@@ -66,7 +66,7 @@ class IdentityRoleProvider implements IdentityInterface, IdentityRoleProviderInt
     /**
      * Sets identity of currently logged in user
      *
-     * @param  UserInterface $defaultIdentity
+     * @param UserInterface $defaultIdentity
      * @return self
      */
     public function setDefaultIdentity(UserInterface $defaultIdentity)
@@ -97,15 +97,15 @@ class IdentityRoleProvider implements IdentityInterface, IdentityRoleProviderInt
     }
 
     /**
-     * Get the list of roles of a user
      *
-     * @return string[]
+     * {@inheritdoc}
+     * @see \UserRbac\Identity\IdentityRoleProviderInterface::getIdentityRoles()
      */
     public function getIdentityRoles(UserInterface $user = null)
     {
         if ($user === null) {
             $user = $this->getDefaultIdentity();
-            if (!$user) {
+            if (! $user) {
                 return (array) $this->getModuleOptions()->getDefaultGuestRole();
             }
         }
@@ -113,8 +113,8 @@ class IdentityRoleProvider implements IdentityInterface, IdentityRoleProviderInt
         $resultSet = $this->getUserRoleLinkerMapper()->findByUser($user);
 
         if (count($resultSet) > 0) { // if exists in database
-            $roles = array();
-            foreach ($resultSet  as $userRoleLinker) {
+            $roles = [];
+            foreach ($resultSet as $userRoleLinker) {
                 $roles[] = $userRoleLinker->getRoleId();
             }
 
@@ -122,6 +122,5 @@ class IdentityRoleProvider implements IdentityInterface, IdentityRoleProviderInt
         } else {
             return (array) $this->getModuleOptions()->getDefaultUserRole();
         }
-
     }
 }
