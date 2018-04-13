@@ -1,7 +1,7 @@
 <?php
 namespace UserRbacTest\Factory;
 
-use UserRbac\Factory\UserRoleLinkerMapperFactory;
+use UserRbac\Factory\Mapper\UserRoleLinkerMapperFactory;
 use UserRbac\Mapper\UserRoleLinkerMapper;
 use UserRbac\Options\ModuleOptions;
 use Zend\Db\Adapter\Adapter as DbAdapter;

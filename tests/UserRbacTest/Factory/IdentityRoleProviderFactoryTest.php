@@ -1,7 +1,7 @@
 <?php
 namespace UserRbacTest\Factory;
 
-use UserRbac\Factory\IdentityRoleProviderFactory;
+use UserRbac\Factory\Identity\IdentityRoleProviderFactory;
 use UserRbac\Identity\IdentityRoleProvider;
 use UserRbac\Mapper\UserRoleLinkerMapper;
 use UserRbac\Options\ModuleOptions;

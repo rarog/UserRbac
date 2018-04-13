@@ -1,32 +1,33 @@
 <?php
-namespace UserRbac\Factory;
+
+namespace UserRbac\Factory\View\Strategy;
 
 use Interop\Container\ContainerInterface;
-use UserRbac\Identity\IdentityProvider;
-use UserRbac\Identity\IdentityRoleProvider;
+use UserRbac\View\Strategy\SmartRedirectStrategy;
 use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
 
-class IdentityProviderFactory implements FactoryInterface
+class SmartRedirectStrategyFactory implements FactoryInterface
 {
     /**
-     * Gets identity provider
+     * Gets SmartRedirectStrategy
      *
      * @param  ContainerInterface $container
      * @param  string             $requestedName
      * @param  null|array         $options
-     * @return IdentityProvider
+     * @return SmartRedirectStrategy
      */
     public function __invoke(ContainerInterface $container, $requestedName, array $options = null)
     {
-        return new IdentityProvider($container->get(IdentityRoleProvider::class));
+        return new SmartRedirectStrategy($container->get('zfcuser_auth_service'));
     }
 
     /**
-     * Gets identity provider
+     * Gets SmartRedirectStrategy
      *
      * @param  ServiceLocatorInterface $serviceLocator
-     * @return IdentityProvider
+     * @return SmartRedirectStrategy
+     *
      */
     public function createService(ServiceLocatorInterface $serviceLocator)
     {

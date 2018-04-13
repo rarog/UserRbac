@@ -1,31 +1,40 @@
 <?php
-namespace UserRbac\Factory;
+namespace UserRbac\Factory\Mapper;
 
 use Interop\Container\ContainerInterface;
+use UserRbac\Mapper\UserRoleLinkerMapper;
 use UserRbac\Options\ModuleOptions;
+use Zend\Db\Adapter\Adapter as DbAdapter;
 use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
 
-class ModuleOptionsFactory implements FactoryInterface
+class UserRoleLinkerMapperFactory implements FactoryInterface
 {
     /**
-     * Gets ModuleOptions
+     * Gets user role linker
      *
      * @param  ContainerInterface $container
      * @param  string             $requestedName
      * @param  null|array         $options
-     * @return ModuleOptions
+     * @return UserRoleLinkerMapper
      */
     public function __invoke(ContainerInterface $container, $requestedName, array $options = null)
     {
-        return new ModuleOptions($container->get('Config')['user_rbac']);
+        $mapper = new UserRoleLinkerMapper;
+        $options = $container->get(ModuleOptions::class);
+        $class = $options->getUserRoleLinkerEntityClass();
+        $mapper->setEntityPrototype(new $class);
+        $mapper->setDbAdapter($container->get(DbAdapter::class));
+        $mapper->setTableName($options->getTableName());
+
+        return $mapper;
     }
 
     /**
-     * gets ModuleOptions
+     * Gets user role linker
      *
      * @param  ServiceLocatorInterface $serviceLocator
-     * @return ModuleOptions
+     * @return UserRoleLinkerMapper
      */
     public function createService(ServiceLocatorInterface $serviceLocator)
     {

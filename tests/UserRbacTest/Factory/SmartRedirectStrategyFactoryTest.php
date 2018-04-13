@@ -1,7 +1,7 @@
 <?php
 namespace UserRbacTest\Factory;
 
-use UserRbac\Factory\SmartRedirectStrategyFactory;
+use UserRbac\Factory\View\Strategy\SmartRedirectStrategyFactory;
 use UserRbac\View\Strategy\SmartRedirectStrategy;
 use Zend\Authentication\AuthenticationService;
 use Zend\ServiceManager\ServiceManager;

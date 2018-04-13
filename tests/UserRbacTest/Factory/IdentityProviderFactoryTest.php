@@ -1,7 +1,7 @@
 <?php
 namespace UserRbacTest\Factory;
 
-use UserRbac\Factory\IdentityProviderFactory;
+use UserRbac\Factory\Identity\IdentityProviderFactory;
 use UserRbac\Identity\IdentityProvider;
 use UserRbac\Identity\IdentityRoleProvider;
 use Zend\ServiceManager\ServiceManager;

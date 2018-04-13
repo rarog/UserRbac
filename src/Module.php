@@ -23,11 +23,11 @@ class Module implements
     {
         return [
             'factories' => [
-                Options\ModuleOptions::class => Factory\ModuleOptionsFactory::class,
-                Mapper\UserRoleLinkerMapper::class => Factory\UserRoleLinkerMapperFactory::class,
-                Identity\IdentityProvider::class => Factory\IdentityProviderFactory::class,
-                Identity\IdentityRoleProvider::class => Factory\IdentityRoleProviderFactory::class,
-                View\Strategy\SmartRedirectStrategy::class => Factory\SmartRedirectStrategyFactory::class,
+                Options\ModuleOptions::class => Factory\Options\ModuleOptionsFactory::class,
+                Mapper\UserRoleLinkerMapper::class => Factory\Mapper\UserRoleLinkerMapperFactory::class,
+                Identity\IdentityProvider::class => Factory\Identity\IdentityProviderFactory::class,
+                Identity\IdentityRoleProvider::class => Factory\Identity\IdentityRoleProviderFactory::class,
+                View\Strategy\SmartRedirectStrategy::class => Factory\View\Strategy\SmartRedirectStrategyFactory::class,
             ],
             'aliases' => [
                 'Zend\Authentication\AuthenticationService' => 'zfcuser_auth_service',

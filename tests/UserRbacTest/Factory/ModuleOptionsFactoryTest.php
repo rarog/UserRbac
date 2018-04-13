@@ -1,7 +1,7 @@
 <?php
 namespace UserRbacTest\Factory;
 
-use UserRbac\Factory\ModuleOptionsFactory;
+use UserRbac\Factory\Options\ModuleOptionsFactory;
 use Zend\ServiceManager\ServiceManager;
 
 class ModuleOptionsFactoryTest extends \PHPUnit\Framework\TestCase

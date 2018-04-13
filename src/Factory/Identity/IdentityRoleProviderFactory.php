@@ -1,5 +1,5 @@
 <?php
-namespace UserRbac\Factory;
+namespace UserRbac\Factory\Identity;
 
 use Interop\Container\ContainerInterface;
 use UserRbac\Identity\IdentityRoleProvider;
