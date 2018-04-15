@@ -3,6 +3,7 @@ namespace UserRbacTest\Factory;
 
 use PHPUnit\Framework\TestCase;
 use UserRbac\Factory\Options\ModuleOptionsFactory;
+use UserRbac\Options\ModuleOptions;
 use Zend\ServiceManager\ServiceManager;
 
 class ModuleOptionsFactoryTest extends TestCase
@@ -13,9 +14,9 @@ class ModuleOptionsFactoryTest extends TestCase
         $factory = new ModuleOptionsFactory();
         $serviceManager = new ServiceManager();
         $serviceManager->setService('Config', [
-            'user_rbac' => []
+            'user_rbac' => [],
         ]);
 
-        $this->assertInstanceof('UserRbac\Options\ModuleOptions', $factory->createService($serviceManager));
+        $this->assertInstanceof(ModuleOptions::class, $factory($serviceManager, null));
     }
 }
