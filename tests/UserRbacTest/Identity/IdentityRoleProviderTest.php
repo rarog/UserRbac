@@ -13,18 +13,18 @@ class IdentityRoleProviderTest extends TestCase
     public function testGetDefaultRoleOfUnauthenticatedUser()
     {
         $options = new ModuleOptions([
-            'default_guest_role' => 'special_guest'
+            'default_guest_role' => 'special_guest',
         ]);
         $identityRoleProvider = new IdentityRoleProvider($this->createMock('UserRbac\Mapper\UserRoleLinkerMapperInterface'), $options);
         $this->assertEquals([
-            'special_guest'
+            'special_guest',
         ], $identityRoleProvider->getRoles());
     }
 
     public function testGetDefaultRoleOfAuthenticatedUser()
     {
         $options = new ModuleOptions([
-            'default_user_role' => 'default_user_role123'
+            'default_user_role' => 'default_user_role123',
         ]);
         $mapper = $this->createMock('UserRbac\Mapper\UserRoleLinkerMapperInterface');
         $identityRoleProvider = new IdentityRoleProvider($mapper, $options);
@@ -35,11 +35,11 @@ class IdentityRoleProviderTest extends TestCase
             ->will($this->returnValueMap([
             [
                 $user,
-                []
+                [],
             ]
         ]));
         $this->assertEquals([
-            'default_user_role123'
+            'default_user_role123',
         ], $identityRoleProvider->getRoles());
     }
 
@@ -55,15 +55,27 @@ class IdentityRoleProviderTest extends TestCase
             [
                 $identity,
                 [
-                    new UserRoleLinker($identity, 'role1'),
-                    new UserRoleLinker($identity, 'role2')
+                    new UserRoleLinker([
+                        'user_id' => $identity->getId(),
+                        'role_id' => 'role1',
+                    ]),
+                    new UserRoleLinker([
+                        'user_id' => $identity->getId(),
+                        'role_id' => 'role2',
+                    ])
                 ]
             ],
             [
                 $user,
                 [
-                    new UserRoleLinker($user, 'role1'),
-                    new UserRoleLinker($user, 'role3')
+                    new UserRoleLinker([
+                        'user_id' => $user->getId(),
+                        'role_id' => 'role1',
+                    ]),
+                    new UserRoleLinker([
+                        'user_id' => $user->getId(),
+                        'role_id' => 'role3',
+                    ])
                 ]
             ]
         ];
@@ -72,11 +84,11 @@ class IdentityRoleProviderTest extends TestCase
             ->will($this->returnValueMap($map));
         $this->assertEquals([
             'role1',
-            'role2'
+            'role2',
         ], $identityRoleProvider->getRoles());
         $this->assertEquals([
             'role1',
-            'role3'
+            'role3',
         ], $identityRoleProvider->getIdentityRoles($user));
     }
 }

@@ -2,10 +2,9 @@
 namespace UserRbacTest\Mapper;
 
 use UserRbac\Mapper\UserRoleLinkerMapper;
-use ZfcUser\Entity\User;
 use UserRbac\Model\UserRoleLinker;
-use Zend\Db\Sql\Sql;
 use Zend\Db\Sql\Select;
+use ZfcUser\Entity\User;
 use ReflectionClass;
 
 class UserRoleLinkerMapperTest extends \PHPUnit\Framework\TestCase
@@ -30,13 +29,32 @@ class UserRoleLinkerMapperTest extends \PHPUnit\Framework\TestCase
 
         $stmt->expects($this->once())
             ->method('execute')
-            ->will($this->returnValue([['user_id' => 13, 'role_id' => 'role1'], ['user_id' => 13, 'role_id' => 'role2']]));
+            ->will(
+            $this->returnValue([
+                [
+                    'user_id' => 13,
+                    'role_id' => 'role1',
+                ],
+                [
+                    'user_id' => 13,
+                    'role_id' => 'role2',
+                ]
+            ]));
         $this->getMethod('setSlaveSql')->invokeArgs($mapper, [$sql]);
         $sql->expects($this->once())
             ->method('select')
             ->will($this->returnValue(new Select()));
         $resultSet =  $mapper->findByUser($user);
-        $expectedResultArray = [new UserRoleLinker($user, 'role1'), new UserRoleLinker($user, 'role2')];
+        $expectedResultArray = [
+            new UserRoleLinker([
+                'user_id' => $user->getId(),
+                'role_id' => 'role1',
+            ]),
+            new UserRoleLinker([
+                'user_id' => $user->getId(),
+                'role_id' => 'role2',
+            ])
+        ];
         $this->assertEquals(count($expectedResultArray), count($resultSet));
         foreach ($resultSet as $i => $result) {
             $this->assertEquals($expectedResultArray[$i]->getRoleId(), $result->getRoleId());

@@ -1,12 +1,13 @@
 <?php
 namespace UserRbac\Model;
 
+use Zend\Stdlib\ArraySerializableInterface;
 use ZfcUser\Entity\UserInterface;
 
 /**
  * Entity of table, 'user_role_linker'
  */
-class UserRoleLinker implements UserRoleLinkerInterface
+class UserRoleLinker implements ArraySerializableInterface, UserRoleLinkerInterface
 {
 
     /**
@@ -26,16 +27,12 @@ class UserRoleLinker implements UserRoleLinkerInterface
     /**
      * Constructor
      *
-     * @param UserInterface|null $user
-     * @param string|null $roleId
+     * @param array $data
      */
-    public function __construct(UserInterface $user = null, $roleId = null)
+    public function __construct(array $data = null)
     {
-        if ($user) {
-            $this->setUser($user);
-        }
-        if ($roleId) {
-            $this->setRoleId($roleId);
+        if ($data) {
+            $this->exchangeArray($data);
         }
     }
 
@@ -94,4 +91,27 @@ class UserRoleLinker implements UserRoleLinkerInterface
     {
         return $this->roleId;
     }
+
+    /**
+     * {@inheritDoc}
+     * @see \Zend\Stdlib\ArraySerializableInterface::exchangeArray()
+     */
+    public function exchangeArray(array $array)
+    {
+        $this->setUserId(!empty($array['user_id']) ? $array['user_id'] : null);
+        $this->setRoleId(!empty($array['role_id']) ? $array['role_id'] : null);
+    }
+
+    /**
+     * {@inheritDoc}
+     * @see \Zend\Stdlib\ArraySerializableInterface::getArrayCopy()
+     */
+    public function getArrayCopy()
+    {
+        return [
+            'user_id' => $this->getUserId(),
+            'role_id' => $this->getRoleId(),
+        ];
+    }
+
 }
