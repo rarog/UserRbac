@@ -1,5 +1,5 @@
 <?php
-namespace UserRbac\Entity;
+namespace UserRbac\Model;
 
 use ZfcUser\Entity\UserInterface;
 

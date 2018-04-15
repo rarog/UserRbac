@@ -2,8 +2,8 @@
 namespace UserRbacTest\Identity;
 
 use PHPUnit\Framework\TestCase;
-use UserRbac\Entity\UserRoleLinker;
 use UserRbac\Identity\IdentityRoleProvider;
+use UserRbac\Model\UserRoleLinker;
 use UserRbac\Options\ModuleOptions;
 use ZfcUser\Entity\User;
 

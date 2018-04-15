@@ -3,18 +3,19 @@ namespace UserRbacTest\Mapper;
 
 use UserRbac\Mapper\UserRoleLinkerMapper;
 use ZfcUser\Entity\User;
-use UserRbac\Entity\UserRoleLinker;
+use UserRbac\Model\UserRoleLinker;
 use Zend\Db\Sql\Sql;
 use Zend\Db\Sql\Select;
+use ReflectionClass;
 
 class UserRoleLinkerMapperTest extends \PHPUnit\Framework\TestCase
 {
     public function testFindByUser()
     {
-        $mapper = new UserRoleLinkerMapper;
-        $user = new User;
+        $mapper = new UserRoleLinkerMapper();
+        $user = new User();
         $user->setId(13);
-        $mapper->setEntityPrototype(new UserRoleLinker);
+        $mapper->setEntityPrototype(new UserRoleLinker());
         $adapter = $this->getMockBuilder('Zend\Db\Adapter\Adapter')
             ->disableOriginalConstructor()
             ->getMock();
@@ -33,7 +34,7 @@ class UserRoleLinkerMapperTest extends \PHPUnit\Framework\TestCase
         $this->getMethod('setSlaveSql')->invokeArgs($mapper, [$sql]);
         $sql->expects($this->once())
             ->method('select')
-            ->will($this->returnValue(new Select));
+            ->will($this->returnValue(new Select()));
         $resultSet =  $mapper->findByUser($user);
         $expectedResultArray = [new UserRoleLinker($user, 'role1'), new UserRoleLinker($user, 'role2')];
         $this->assertEquals(count($expectedResultArray), count($resultSet));
@@ -45,7 +46,7 @@ class UserRoleLinkerMapperTest extends \PHPUnit\Framework\TestCase
 
     protected function getMethod($name)
     {
-        $class = new \ReflectionClass('UserRbac\Mapper\UserRoleLinkerMapper');
+        $class = new ReflectionClass(UserRoleLinkerMapper::class);
         $method = $class->getMethod($name);
         $method->setAccessible(true);
 

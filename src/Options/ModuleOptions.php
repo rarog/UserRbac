@@ -2,6 +2,7 @@
 
 namespace UserRbac\Options;
 
+use UserRbac\Model\UserRoleLinker;
 use Zend\Stdlib\AbstractOptions;
 
 class ModuleOptions extends AbstractOptions implements ModuleOptionsInterface
@@ -24,7 +25,7 @@ class ModuleOptions extends AbstractOptions implements ModuleOptionsInterface
     /**
      * @var string
      */
-    protected $userRoleLinkerEntityClass = 'UserRbac\Entity\UserRoleLinker';
+    protected $userRoleLinkerEntityClass = UserRoleLinker::class;
 
     /**
      * Sets table name

@@ -1,7 +1,7 @@
 <?php
 namespace UserRbac\Mapper;
 
-use UserRbac\Entity\UserRoleLinkerInterface;
+use UserRbac\Model\UserRoleLinkerInterface;
 use Zend\Db\Adapter\Adapter;
 use Zend\Db\Adapter\Driver\ResultInterface;
 use Zend\Db\ResultSet\HydratingResultSet;

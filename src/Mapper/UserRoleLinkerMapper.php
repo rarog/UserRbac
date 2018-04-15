@@ -2,7 +2,7 @@
 
 namespace UserRbac\Mapper;
 
-use UserRbac\Entity\UserRoleLinkerInterface;
+use UserRbac\Model\UserRoleLinkerInterface;
 use Zend\Db\Sql\Select;
 use Zend\Hydrator\HydratorInterface;
 use ZfcUser\Entity\UserInterface;

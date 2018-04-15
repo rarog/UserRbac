@@ -1,5 +1,5 @@
 <?php
-namespace UserRbac\Entity;
+namespace UserRbac\Model;
 
 use ZfcUser\Entity\UserInterface;
 
@@ -42,7 +42,7 @@ class UserRoleLinker implements UserRoleLinkerInterface
     /**
      *
      * {@inheritdoc}
-     * @see \UserRbac\Entity\UserRoleLinkerInterface::setUserId()
+     * @see \UserRbac\Model\UserRoleLinkerInterface::setUserId()
      */
     public function setUserId($userId)
     {
@@ -54,7 +54,7 @@ class UserRoleLinker implements UserRoleLinkerInterface
     /**
      *
      * {@inheritdoc}
-     * @see \UserRbac\Entity\UserRoleLinkerInterface::getUserId()
+     * @see \UserRbac\Model\UserRoleLinkerInterface::getUserId()
      */
     public function getUserId()
     {
@@ -64,7 +64,7 @@ class UserRoleLinker implements UserRoleLinkerInterface
     /**
      *
      * {@inheritdoc}
-     * @see \UserRbac\Entity\UserRoleLinkerInterface::setUser()
+     * @see \UserRbac\Model\UserRoleLinkerInterface::setUser()
      */
     public function setUser(UserInterface $user)
     {
@@ -76,7 +76,7 @@ class UserRoleLinker implements UserRoleLinkerInterface
     /**
      *
      * {@inheritdoc}
-     * @see \UserRbac\Entity\UserRoleLinkerInterface::setRoleId()
+     * @see \UserRbac\Model\UserRoleLinkerInterface::setRoleId()
      */
     public function setRoleId($roleId)
     {
@@ -88,7 +88,7 @@ class UserRoleLinker implements UserRoleLinkerInterface
     /**
      *
      * {@inheritdoc}
-     * @see \UserRbac\Entity\UserRoleLinkerInterface::getRoleId()
+     * @see \UserRbac\Model\UserRoleLinkerInterface::getRoleId()
      */
     public function getRoleId()
     {
