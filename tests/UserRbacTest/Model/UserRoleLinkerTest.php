@@ -1,5 +1,5 @@
 <?php
-namespace UserRbacTest\Entity;
+namespace UserRbacTest\Model;
 
 use PHPUnit\Framework\TestCase;
 use UserRbac\Model\UserRoleLinker;
