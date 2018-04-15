@@ -21,6 +21,6 @@ class UserRoleLinkerMapperFactoryTest extends TestCase
             ->getMock();
         $serviceManager->setService(DbAdapter::class, $adapter);
 
-        $this->assertInstanceOf(UserRoleLinkerMapper::class, $factory->createService($serviceManager));
+        $this->assertInstanceOf(UserRoleLinkerMapper::class, $factory($serviceManager, null));
     }
 }
