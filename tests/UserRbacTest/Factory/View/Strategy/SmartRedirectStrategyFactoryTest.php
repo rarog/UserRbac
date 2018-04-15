@@ -16,6 +16,6 @@ class SmartRedirectStrategyFactoryTest extends TestCase
         $serviceManager = new ServiceManager();
         $serviceManager->setService('zfcuser_auth_service', new AuthenticationService());
 
-        $this->assertInstanceOf(SmartRedirectStrategy::class, $factory->createService($serviceManager));
+        $this->assertInstanceOf(SmartRedirectStrategy::class, $factory($serviceManager, null));
     }
 }
