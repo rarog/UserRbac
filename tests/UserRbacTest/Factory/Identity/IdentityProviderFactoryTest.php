@@ -18,6 +18,6 @@ class IdentityProviderFactoryTest extends TestCase
             ->disableOriginalConstructor()
             ->getMock();
         $serviceManager->setService(IdentityRoleProvider::class, $identityRoleProvider);
-        $this->assertInstanceOf(IdentityProvider::class, $factory->createService($serviceManager));
+        $this->assertInstanceOf(IdentityProvider::class, $factory($serviceManager, null));
     }
 }
