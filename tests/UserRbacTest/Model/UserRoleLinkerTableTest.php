@@ -4,10 +4,11 @@ namespace UserRbacTest\Model;
 use PHPUnit\Framework\TestCase;
 use UserRbac\Model\UserRoleLinker;
 use UserRbac\Model\UserRoleLinkerTable;
+use Zend\Db\ResultSet\ResultSetInterface;
 use Zend\Db\TableGateway\TableGatewayInterface;
 use ZfcUser\Entity\User;
 use ZfcUser\Options\ModuleOptions as ZfcUserModuleOptions;
-use ReflectionClass;
+use RuntimeException;
 
 class UserRoleLinkerTableTest extends TestCase
 {
@@ -18,6 +19,29 @@ class UserRoleLinkerTableTest extends TestCase
             $this->tableGateway->reveal(),
             new ZfcUserModuleOptions()
         );
+    }
+
+    public function testFetchAll()
+    {
+        $resultSet = $this->prophesize(ResultSetInterface::class)->reveal();
+        $this->tableGateway->select(null)->willReturn($resultSet);
+
+        $this->assertSame($resultSet, $this->userRoleLinkerTable->fetchAll());
+    }
+
+    public function testExceptionIsThrownWhenGettingNonExistentUserRoleLinker()
+    {
+        $resultSet = $this->prophesize(ResultSetInterface::class);
+        $resultSet->current()->willReturn(null);
+
+        $this->tableGateway->select([
+            'user_id' => 123,
+            'role_id' => 'someRole'
+        ])->willReturn($resultSet->reveal());
+
+        $this->expectException(RuntimeException::class);
+        $this->expectExceptionMessage('Could not find row with identifiers 123,someRole');
+        $this->userRoleLinkerTable->getUserRoleLinker(123, 'someRole');
     }
 
     public function testFindByUser()

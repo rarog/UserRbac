@@ -55,13 +55,16 @@ class UserRoleLinkerTable implements UserRoleLinkerTableInterface
      */
     public function getUserRoleLinker($userId, $roleId)
     {
+        $userId = (int) $userId;
+        $roleId = (string) $roleId;
+
         $rowset = $this->fetchAll([
             'user_id' => $userId,
             'role_id' => $roleId,
         ]);
         $row = $rowset->current();
         if (! $row) {
-            throw new RuntimeException(sprintf('Could not find row with identifiers %d,%d', $userId, $locale));
+            throw new RuntimeException(sprintf('Could not find row with identifiers %d,%s', $userId, $roleId));
         }
 
         return $row;
