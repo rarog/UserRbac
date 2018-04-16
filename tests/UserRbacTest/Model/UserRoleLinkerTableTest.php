@@ -29,7 +29,27 @@ class UserRoleLinkerTableTest extends TestCase
         $this->assertSame($resultSet, $this->userRoleLinkerTable->fetchAll());
     }
 
-    public function testExceptionIsThrownWhenGettingNonExistentUserRoleLinker()
+    public function testGetUserRoleLinker()
+    {
+        $userRoleLinker = new UserRoleLinker([
+            'user_id' => 123,
+            'role_id' => 'someRole'
+        ]);
+
+        $resultSet = $this->prophesize(ResultSetInterface::class);
+        $resultSet->current()->willReturn($userRoleLinker);
+
+        $this->tableGateway->select([
+            'user_id' => 123,
+            'role_id' => 'someRole'
+        ])->willReturn($resultSet->reveal());
+
+        $returnedResultSet = $this->userRoleLinkerTable->getUserRoleLinker(123, 'someRole');
+        $this->assertInstanceOf(UserRoleLinker::class, $returnedResultSet);
+        $this->assertEquals($userRoleLinker->getArrayCopy(), $returnedResultSet->getArrayCopy());
+    }
+
+    public function testGetUserRoleLinkerExceptionThrown()
     {
         $resultSet = $this->prophesize(ResultSetInterface::class);
         $resultSet->current()->willReturn(null);
