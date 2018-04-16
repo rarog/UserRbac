@@ -53,7 +53,7 @@ class UserRoleLinkerTable implements UserRoleLinkerTableInterface
      * @throws RuntimeException
      * @return UserRoleLinker
      */
-    public function getUserLanguage($userId, $roleId)
+    public function getUserRoleLinker($userId, $roleId)
     {
         $rowset = $this->fetchAll([
             'user_id' => $userId,
@@ -82,11 +82,11 @@ class UserRoleLinkerTable implements UserRoleLinkerTableInterface
         $userId = (int) $userRoleLinker->UserId;
 
         if ($userId === 0) {
-            throw new RuntimeException('Cannot handle userlanguage with invalid user id');
+            throw new RuntimeException('Cannot handle user role linker with invalid user id');
         }
 
         try {
-            if (($userRoleLinker = $this->getUserLanguage($userId, $userRoleLinker->Locale))) {
+            if ($this->getUserRoleLinker($userId, $userRoleLinker->Locale)) {
                 return;
             }
         } catch (RuntimeException $e) {
