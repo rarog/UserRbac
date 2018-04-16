@@ -3,15 +3,25 @@ namespace UserRbacTest\Factory;
 
 use PHPUnit\Framework\TestCase;
 use UserRbac\Factory\Model\UserRoleLinkerTableFactory;
+use UserRbac\Model\UserRoleLinker;
 use UserRbac\Model\UserRoleLinkerTable;
 use UserRbac\Options\ModuleOptions;
 use Zend\Db\Adapter\AdapterInterface;
+use Zend\Db\TableGateway\TableGateway;
 use Zend\ServiceManager\ServiceManager;
 use ZfcUser\Options\ModuleOptions as ZfcUserModuleOptions;
 use ReflectionClass;
 
 class UserRoleLinkerTableFactoryTest extends TestCase
 {
+
+    private function getProperty($class, $propertyName)
+    {
+        $reflection = new ReflectionClass($class);
+        $property = $reflection->getProperty($propertyName);
+        $property->setAccessible(true);
+        return $property;
+    }
 
     public function testFactory()
     {
@@ -27,17 +37,18 @@ class UserRoleLinkerTableFactoryTest extends TestCase
             ->getMock();
         $serviceManager->setService(AdapterInterface::class, $adapter);
 
-        $userRoleLinker = $factory($serviceManager, null);
-        $this->assertInstanceOf(UserRoleLinkerTable::class, $userRoleLinker);
+        $userRoleLinkerTable = $factory($serviceManager, null);
+        $this->assertInstanceOf(UserRoleLinkerTable::class, $userRoleLinkerTable);
 
-        $reflection = new ReflectionClass(UserRoleLinkerTable::class);
-        $property = $reflection->getProperty('tableGateway');
-        $property->setAccessible(true);
+        $property = $this->getProperty(UserRoleLinkerTable::class, 'tableGateway');
 
         /**
-         * @var TableGatewayInterface $tableGateway
+         * @var TableGateway $tableGateway
          */
-        $tableGateway = $property->getValue($userRoleLinker);
+        $tableGateway = $property->getValue($userRoleLinkerTable);
+        $this->assertInstanceOf(TableGateway::class, $tableGateway);
         $this->assertEquals('user_role_linker', $tableGateway->getTable());
+        $this->assertInstanceOf(UserRoleLinker::class, $tableGateway->getResultSetPrototype()
+            ->getArrayObjectPrototype());
     }
 }
