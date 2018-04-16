@@ -4,7 +4,7 @@ namespace UserRbacTest\Identity;
 use PHPUnit\Framework\TestCase;
 use UserRbac\Identity\IdentityProvider;
 use UserRbac\Identity\IdentityRoleProvider;
-use UserRbac\Mapper\UserRoleLinkerMapperInterface;
+use UserRbac\Model\UserRoleLinkerTableInterface;
 use UserRbac\Options\ModuleOptions;
 
 class IdentityProviderTest extends TestCase
@@ -13,8 +13,8 @@ class IdentityProviderTest extends TestCase
     public function testGetIdentity()
     {
         $options = $this->createMock(ModuleOptions::class);
-        $userRoleLinkerMapper = $this->createMock(UserRoleLinkerMapperInterface::class);
-        $identityRoleProvider = new IdentityRoleProvider($userRoleLinkerMapper, $options);
+        $userRoleLinkerTable = $this->createMock(UserRoleLinkerTableInterface::class);
+        $identityRoleProvider = new IdentityRoleProvider($userRoleLinkerTable, $options);
         $identityProvider = new IdentityProvider($identityRoleProvider);
         $this->assertEquals($identityRoleProvider, $identityProvider->getIdentity());
     }

@@ -44,26 +44,6 @@ class IdentityRoleProvider implements IdentityInterface, IdentityRoleProviderInt
     }
 
     /**
-     * Gets module options
-     *
-     * @return ModuleOptionsInterface
-     */
-    public function getModuleOptions()
-    {
-        return $this->moduleOptions;
-    }
-
-    /**
-     * Gets user role linker mapper
-     *
-     * @return UserRoleLinkerTableInterface
-     */
-    public function getUserRoleLinkerMapper()
-    {
-        return $this->userRoleLinkerTable;
-    }
-
-    /**
      * Sets identity of currently logged in user
      *
      * @param UserInterface $defaultIdentity
@@ -106,11 +86,11 @@ class IdentityRoleProvider implements IdentityInterface, IdentityRoleProviderInt
         if ($user === null) {
             $user = $this->getDefaultIdentity();
             if (! $user) {
-                return (array) $this->getModuleOptions()->getDefaultGuestRole();
+                return (array) $this->moduleOptions->getDefaultGuestRole();
             }
         }
 
-        $resultSet = $this->getUserRoleLinkerMapper()->findByUser($user);
+        $resultSet = $this->userRoleLinkerTable->findByUser($user);
 
         if (count($resultSet) > 0) { // if exists in database
             $roles = [];
@@ -120,7 +100,7 @@ class IdentityRoleProvider implements IdentityInterface, IdentityRoleProviderInt
 
             return $roles;
         } else {
-            return (array) $this->getModuleOptions()->getDefaultUserRole();
+            return (array) $this->moduleOptions->getDefaultUserRole();
         }
     }
 }

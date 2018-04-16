@@ -3,7 +3,7 @@
 namespace UserRbac\Model;
 
 use Zend\Db\Sql\Select;
-use Zend\Db\TableGateway\TableGateway;
+use Zend\Db\TableGateway\TableGatewayInterface;
 use ZfcUser\Entity\UserInterface;
 use ZfcUser\Options\ModuleOptions as ZfcUserOptions;
 use RuntimeException;
@@ -13,7 +13,7 @@ class UserRoleLinkerTable implements UserRoleLinkerTableInterface
     /**
      * Table gateway
      *
-     * @var TableGateway
+     * @var TableGatewayInterface
      */
     protected $tableGateway;
 
@@ -25,10 +25,10 @@ class UserRoleLinkerTable implements UserRoleLinkerTableInterface
     /**
      * Constructor
      *
-     * @param TableGateway $tableGateway
+     * @param TableGatewayInterface $tableGateway
      * @param ZfcUserOptions $zfcUserOptions
      */
-    public function __construct(TableGateway $tableGateway, $zfcUserOptions)
+    public function __construct(TableGatewayInterface $tableGateway, $zfcUserOptions)
     {
         $this->tableGateway = $tableGateway;
         $this->zfcUserOptions = $zfcUserOptions;
