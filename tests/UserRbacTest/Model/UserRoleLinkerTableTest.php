@@ -64,6 +64,15 @@ class UserRoleLinkerTableTest extends TestCase
         $this->userRoleLinkerTable->getUserRoleLinker(123, 'someRole');
     }
 
+    public function testDdeleteUserRoleLinker()
+    {
+        $this->tableGateway->delete([
+            'user_id' => 123,
+            'role_id' => 'someRole'
+        ])->shouldBeCalled();
+        $this->userRoleLinkerTable->deleteUserRoleLinker(123, 'someRole');
+    }
+
     public function testFindByUser()
     {
         $user = new User();

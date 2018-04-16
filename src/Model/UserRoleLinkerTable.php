@@ -104,14 +104,14 @@ class UserRoleLinkerTable implements UserRoleLinkerTableInterface
      * @param int $userId
      * @param string $locale
      */
-    public function deleteUserRoleLinker($userId, $locale)
+    public function deleteUserRoleLinker($userId, $roleId)
     {
         $userId = (int) $userId;
         $roleId = (string) $roleId;
 
         $this->tableGateway->delete([
             'user_id' => $userId,
-            'locale'  => $locale,
+            'role_id' => $roleId,
         ]);
     }
 
