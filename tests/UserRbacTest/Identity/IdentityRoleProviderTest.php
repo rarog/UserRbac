@@ -15,7 +15,7 @@ class IdentityRoleProviderTest extends TestCase
         $options = new ModuleOptions([
             'default_guest_role' => 'special_guest',
         ]);
-        $identityRoleProvider = new IdentityRoleProvider($this->createMock('UserRbac\Mapper\UserRoleLinkerMapperInterface'), $options);
+        $identityRoleProvider = new IdentityRoleProvider($this->createMock('UserRbac\Model\UserRoleLinkerTableInterface'), $options);
         $this->assertEquals([
             'special_guest',
         ], $identityRoleProvider->getRoles());
@@ -26,7 +26,7 @@ class IdentityRoleProviderTest extends TestCase
         $options = new ModuleOptions([
             'default_user_role' => 'default_user_role123',
         ]);
-        $mapper = $this->createMock('UserRbac\Mapper\UserRoleLinkerMapperInterface');
+        $mapper = $this->createMock('UserRbac\Model\UserRoleLinkerTableInterface');
         $identityRoleProvider = new IdentityRoleProvider($mapper, $options);
         $user = new User();
         $identityRoleProvider->setDefaultIdentity($user);
@@ -46,7 +46,7 @@ class IdentityRoleProviderTest extends TestCase
     public function testGetIdentityRoles()
     {
         $options = new ModuleOptions();
-        $mapper = $this->createMock('UserRbac\Mapper\UserRoleLinkerMapperInterface');
+        $mapper = $this->createMock('UserRbac\Model\UserRoleLinkerTableInterface');
         $identityRoleProvider = new IdentityRoleProvider($mapper, $options);
         $identity = new User();
         $identityRoleProvider->setDefaultIdentity($identity);

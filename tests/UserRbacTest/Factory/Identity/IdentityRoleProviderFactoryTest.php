@@ -4,7 +4,7 @@ namespace UserRbacTest\Factory;
 use PHPUnit\Framework\TestCase;
 use UserRbac\Factory\Identity\IdentityRoleProviderFactory;
 use UserRbac\Identity\IdentityRoleProvider;
-use UserRbac\Mapper\UserRoleLinkerMapper;
+use UserRbac\Model\UserRoleLinkerTable;
 use UserRbac\Options\ModuleOptions;
 use Zend\ServiceManager\ServiceManager;
 use ZfcUser\Entity\User;
@@ -16,7 +16,7 @@ class IdentityRoleProviderFactoryTest extends TestCase
     {
         $factory = new IdentityRoleProviderFactory();
         $serviceManager = new ServiceManager();
-        $serviceManager->setService(UserRoleLinkerMapper::class, $this->createMock('UserRbac\Mapper\UserRoleLinkerMapperInterface'));
+        $serviceManager->setService(UserRoleLinkerTable::class, $this->createMock('UserRbac\Model\UserRoleLinkerTableInterface'));
         $serviceManager->setService(ModuleOptions::class, new ModuleOptions());
         $authenticationService = $this->createMock('Zend\Authentication\AuthenticationService');
         $authenticationService->expects($this->any())

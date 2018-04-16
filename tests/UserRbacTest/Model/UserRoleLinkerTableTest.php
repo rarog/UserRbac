@@ -1,17 +1,17 @@
 <?php
 namespace UserRbacTest\Mapper;
 
-use UserRbac\Mapper\UserRoleLinkerMapper;
+use UserRbac\Model\UserRoleLinkerTable;
 use UserRbac\Model\UserRoleLinker;
 use Zend\Db\Sql\Select;
 use ZfcUser\Entity\User;
 use ReflectionClass;
 
-class UserRoleLinkerMapperTest extends \PHPUnit\Framework\TestCase
+class UserRoleLinkerTableTest extends \PHPUnit\Framework\TestCase
 {
     public function testFindByUser()
     {
-        $mapper = new UserRoleLinkerMapper();
+        $mapper = new UserRoleLinkerTable();
         $user = new User();
         $user->setId(13);
         $mapper->setEntityPrototype(new UserRoleLinker());
@@ -64,7 +64,7 @@ class UserRoleLinkerMapperTest extends \PHPUnit\Framework\TestCase
 
     protected function getMethod($name)
     {
-        $class = new ReflectionClass(UserRoleLinkerMapper::class);
+        $class = new ReflectionClass(UserRoleLinkerTable::class);
         $method = $class->getMethod($name);
         $method->setAccessible(true);
 

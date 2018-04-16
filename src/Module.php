@@ -24,8 +24,7 @@ class Module implements
         return [
             'factories' => [
                 Options\ModuleOptions::class => Factory\Options\ModuleOptionsFactory::class,
-                Mapper\UserRoleLinkerMapper::class => Factory\Mapper\UserRoleLinkerMapperFactory::class,
-                Model\UserRoleLinkerTableGateway::class => Factory\Model\UserRoleLinkerTableGatewayFactory::class,
+                Model\UserRoleLinkerTable::class => Factory\Model\UserRoleLinkerTableFactory::class,
                 Identity\IdentityProvider::class => Factory\Identity\IdentityProviderFactory::class,
                 Identity\IdentityRoleProvider::class => Factory\Identity\IdentityRoleProviderFactory::class,
                 View\Strategy\SmartRedirectStrategy::class => Factory\View\Strategy\SmartRedirectStrategyFactory::class,

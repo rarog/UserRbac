@@ -1,7 +1,7 @@
 <?php
 namespace UserRbac\Identity;
 
-use UserRbac\Mapper\UserRoleLinkerMapperInterface;
+use UserRbac\Model\UserRoleLinkerTableInterface;
 use UserRbac\Options\ModuleOptionsInterface;
 use ZfcRbac\Identity\IdentityInterface;
 use ZfcUser\Entity\UserInterface;
@@ -20,9 +20,9 @@ class IdentityRoleProvider implements IdentityInterface, IdentityRoleProviderInt
 
     /**
      *
-     * @var UserRoleLinkerMapperInterface
+     * @var UserRoleLinkerTableInterface
      */
-    protected $userRoleLinkerMapper;
+    protected $userRoleLinkerTable;
 
     /**
      *
@@ -33,13 +33,13 @@ class IdentityRoleProvider implements IdentityInterface, IdentityRoleProviderInt
     /**
      * Constructor
      *
-     * @param UserRoleLinkerMapperInterface $userRoleLinkerMapper,
+     * @param UserRoleLinkerTableInterface $userRoleLinkerTable,
      * @param ModuleOptionsInterface $moduleOptions
      * @return self
      */
-    public function __construct(UserRoleLinkerMapperInterface $userRoleLinkerMapper, ModuleOptionsInterface $moduleOptions)
+    public function __construct(UserRoleLinkerTableInterface $userRoleLinkerTable, ModuleOptionsInterface $moduleOptions)
     {
-        $this->userRoleLinkerMapper = $userRoleLinkerMapper;
+        $this->userRoleLinkerTable = $userRoleLinkerTable;
         $this->moduleOptions = $moduleOptions;
     }
 
@@ -56,11 +56,11 @@ class IdentityRoleProvider implements IdentityInterface, IdentityRoleProviderInt
     /**
      * Gets user role linker mapper
      *
-     * @return UserRoleLinkerMapperInterface
+     * @return UserRoleLinkerTableInterface
      */
     public function getUserRoleLinkerMapper()
     {
-        return $this->userRoleLinkerMapper;
+        return $this->userRoleLinkerTable;
     }
 
     /**

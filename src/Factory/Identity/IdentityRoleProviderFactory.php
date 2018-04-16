@@ -3,7 +3,7 @@ namespace UserRbac\Factory\Identity;
 
 use Interop\Container\ContainerInterface;
 use UserRbac\Identity\IdentityRoleProvider;
-use UserRbac\Mapper\UserRoleLinkerMapper;
+use UserRbac\Model\UserRoleLinkerTable;
 use UserRbac\Options\ModuleOptions;
 use Zend\ServiceManager\Factory\FactoryInterface;
 
@@ -21,7 +21,7 @@ class IdentityRoleProviderFactory implements FactoryInterface
     public function __invoke(ContainerInterface $container, $requestedName, array $options = null)
     {
         $identityRoleProvider = new IdentityRoleProvider(
-            $container->get(UserRoleLinkerMapper::class),
+            $container->get(UserRoleLinkerTable::class),
             $container->get(ModuleOptions::class)
         );
         if ($container->get('zfcuser_auth_service')->hasIdentity()) {
