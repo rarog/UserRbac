@@ -1,9 +1,11 @@
 <?php
 namespace UserRbacTest\Options;
 
+use PHPUnit\Framework\TestCase;
+use UserRbac\Model\UserRoleLinker;
 use UserRbac\Options\ModuleOptions;
 
-class ModuleOptionsTest extends \PHPUnit\Framework\TestCase
+class ModuleOptionsTest extends TestCase
 {
     public function testSettersGetters()
     {
@@ -25,7 +27,7 @@ class ModuleOptionsTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals('user_role_linker', $moduleOptions->getTableName());
         $this->assertEquals('guest', $moduleOptions->getDefaultGuestRole());
         $this->assertEquals('member', $moduleOptions->getDefaultUserRole());
-        $this->assertEquals('UserRbac\Model\UserRoleLinker', $moduleOptions->getUserRoleLinkerEntityClass());
+        $this->assertEquals(UserRoleLinker::class, $moduleOptions->getUserRoleLinkerEntityClass());
     }
 
 }
