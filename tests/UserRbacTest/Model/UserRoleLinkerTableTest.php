@@ -4,14 +4,25 @@ namespace UserRbacTest\Model;
 use PHPUnit\Framework\TestCase;
 use UserRbac\Model\UserRoleLinker;
 use UserRbac\Model\UserRoleLinkerTable;
+use Zend\Db\Adapter\Platform\Sql92 as Sql92Plattform;
 use Zend\Db\ResultSet\ResultSetInterface;
 use Zend\Db\TableGateway\TableGatewayInterface;
 use ZfcUser\Entity\User;
 use ZfcUser\Options\ModuleOptions as ZfcUserModuleOptions;
+use ReflectionClass;
 use RuntimeException;
 
 class UserRoleLinkerTableTest extends TestCase
 {
+
+    private function getMethod($class, $methodName)
+    {
+        $reflection = new ReflectionClass($class);
+        $method = $reflection->getMethod($methodName);
+        $method->setAccessible(true);
+        return $method;
+    }
+
     protected function setUp()
     {
         $this->tableGateway = $this->prophesize(TableGatewayInterface::class);
@@ -151,5 +162,23 @@ class UserRoleLinkerTableTest extends TestCase
             $this->assertEquals($expectedResultArray[$i]->getUserId(), $result->getUserId());
             $this->assertEquals($expectedResultArray[$i]->getRoleId(), $result->getRoleId());
         }
+    }
+
+    public function testGetSelectToFindByRoleId()
+    {
+        $this->tableGateway->getTable()->willReturn('user_role_linker');
+        $getSqlToFindByRoleId = $this->getMethod(UserRoleLinkerTable::class, 'getSelectToFindByRoleId');
+        $plattform = new Sql92Plattform();
+
+        // AbstractPlatform::quoteValue is throwing errors. This will suppress them.
+        set_error_handler(function($errno, $errstr, $errfile, $errline, $errcontext){});
+
+        $select1 = $getSqlToFindByRoleId->invokeArgs($this->userRoleLinkerTable, ['role1']);
+        $this->assertEquals('SELECT "user".* FROM "user" INNER JOIN "user_role_linker" ON "user_role_linker"."user_id" = "user"."user_id" WHERE "user_role_linker"."role_id" = \'role1\' GROUP BY "user"."user_id"', $select1->getSqlString($plattform));
+
+        $select2 = $getSqlToFindByRoleId->invokeArgs($this->userRoleLinkerTable, ['role2']);
+        $this->assertEquals('SELECT "user".* FROM "user" INNER JOIN "user_role_linker" ON "user_role_linker"."user_id" = "user"."user_id" WHERE "user_role_linker"."role_id" = \'role2\' GROUP BY "user"."user_id"', $select2->getSqlString($plattform));
+
+        restore_error_handler();
     }
 }

@@ -26,6 +26,27 @@ class UserRoleLinkerTable implements UserRoleLinkerTableInterface
     protected $zfcUserOptions;
 
     /**
+     * Creates Select to find users with a specific role
+     *
+     * @param  string $roleId
+     * @return \Zend\Db\Sql\Select
+     */
+    protected function getSelectToFindByRoleId($roleId)
+    {
+        $select = new Select();
+        $select->from($this->zfcUserOptions->getTableName())
+            ->join($this->tableGateway->getTable(),
+            $this->tableGateway->getTable() . '.user_id = ' . $this->zfcUserOptions->getTableName() . '.user_id', [],
+            Select::JOIN_INNER)
+            ->where([
+            $this->tableGateway->getTable() . '.role_id' => $roleId
+        ])
+            ->group($this->zfcUserOptions->getTableName() . '.user_id');
+
+        return $select;
+    }
+
+    /**
      * Constructor
      *
      * @param TableGatewayInterface $tableGateway
@@ -146,16 +167,8 @@ class UserRoleLinkerTable implements UserRoleLinkerTableInterface
     public function findByRoleId($roleId)
     {
         $roleId = (string) $roleId;
-        $select = new Select();
-        $select->from($this->zfcUserOptions->getTableName())
-            ->join(
-                $this->tableGateway->getTable(),
-                $this->tableGateway->getTable() . '.user_id = ' . $this->zfcUserOptions->getTableName() . '.user_id', [],
-                Select::JOIN_INNER
-            )->where([
-            $this->tableGateway->getTable() . '.role_id' => $roleId
-        ])
-            ->group($this->zfcUserOptions->getTableName() . '.user_id');
+
+        $select = $this->getSelectToFindByRoleId($roleId);
 
         $entityPrototype = $this->zfcUserOptions()->getUserEntityClass();
 
