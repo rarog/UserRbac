@@ -31,7 +31,8 @@ class UserRoleLinkerTableTest extends TestCase
 
     public function testGetUserRoleLinker()
     {
-        $userRoleLinker = new UserRoleLinker([
+        $userRoleLinker = new UserRoleLinker();
+        $userRoleLinker->exchangeArray([
             'user_id' => 123,
             'role_id' => 'someRole'
         ]);
@@ -79,14 +80,8 @@ class UserRoleLinkerTableTest extends TestCase
         $user->setId(13);
 
         $expectedResultArray = [
-            new UserRoleLinker([
-                'user_id' => $user->getId(),
-                'role_id' => 'role1',
-            ]),
-            new UserRoleLinker([
-                'user_id' => $user->getId(),
-                'role_id' => 'role2',
-            ])
+            new UserRoleLinker($user, 'role1'),
+            new UserRoleLinker($user, 'role2'),
         ];
 
         $this->tableGateway->select([

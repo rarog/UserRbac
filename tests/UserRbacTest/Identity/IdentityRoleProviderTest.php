@@ -55,27 +55,15 @@ class IdentityRoleProviderTest extends TestCase
             [
                 $identity,
                 [
-                    new UserRoleLinker([
-                        'user_id' => $identity->getId(),
-                        'role_id' => 'role1',
-                    ]),
-                    new UserRoleLinker([
-                        'user_id' => $identity->getId(),
-                        'role_id' => 'role2',
-                    ])
+                    new UserRoleLinker($identity, 'role1'),
+                    new UserRoleLinker($identity, 'role2'),
                 ]
             ],
             [
                 $user,
                 [
-                    new UserRoleLinker([
-                        'user_id' => $user->getId(),
-                        'role_id' => 'role1',
-                    ]),
-                    new UserRoleLinker([
-                        'user_id' => $user->getId(),
-                        'role_id' => 'role3',
-                    ])
+                    new UserRoleLinker($user, 'role1'),
+                    new UserRoleLinker($user, 'role3'),
                 ]
             ]
         ];

@@ -27,12 +27,16 @@ class UserRoleLinker implements ArraySerializableInterface, UserRoleLinkerInterf
     /**
      * Constructor
      *
-     * @param array $data
+     * @param UserInterface|null $user
+     * @param string|null $roleId
      */
-    public function __construct(array $data = null)
+    public function __construct(UserInterface $user = null, $roleId = null)
     {
-        if ($data) {
-            $this->exchangeArray($data);
+        if ($user) {
+            $this->setUser($user);
+        }
+        if ($roleId) {
+            $this->setRoleId($roleId);
         }
     }
 
