@@ -1,6 +1,7 @@
 UserRbac
 ========
 [![Master Branch Build Status](https://api.travis-ci.org/rarog/UserRbac.svg?branch=master)](http://travis-ci.org/rarog/UserRbac)
+[![Coverage Status](https://coveralls.io/repos/github/rarog/UserRbac/badge.svg?branch=master)](https://coveralls.io/github/rarog/UserRbac?branch=master)
 [![Latest Stable Version](https://poser.pugx.org/rarog/user-rbac/v/stable.png)](https://packagist.org/packages/rarog/user-rbac)
 [![Latest Unstable Version](https://poser.pugx.org/rarog/user-rbac/v/unstable.png)](https://packagist.org/packages/rarog/user-rbac)
 [![Total Downloads](https://poser.pugx.org/rarog/user-rbac/downloads.png)](https://packagist.org/packages/rarog/user-rbac)
