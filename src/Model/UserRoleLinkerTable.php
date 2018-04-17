@@ -2,9 +2,12 @@
 
 namespace UserRbac\Model;
 
+use Zend\Db\ResultSet\HydratingResultSet;
 use Zend\Db\Sql\Select;
+use Zend\Db\Sql\Sql;
 use Zend\Db\TableGateway\TableGatewayInterface;
 use ZfcUser\Entity\UserInterface;
+use ZfcUser\Mapper\UserHydrator;
 use ZfcUser\Options\ModuleOptions as ZfcUserOptions;
 use RuntimeException;
 
@@ -28,7 +31,7 @@ class UserRoleLinkerTable implements UserRoleLinkerTableInterface
      * @param TableGatewayInterface $tableGateway
      * @param ZfcUserOptions $zfcUserOptions
      */
-    public function __construct(TableGatewayInterface $tableGateway, $zfcUserOptions)
+    public function __construct(TableGatewayInterface $tableGateway, ZfcUserOptions $zfcUserOptions)
     {
         $this->tableGateway = $tableGateway;
         $this->zfcUserOptions = $zfcUserOptions;
@@ -143,19 +146,25 @@ class UserRoleLinkerTable implements UserRoleLinkerTableInterface
     public function findByRoleId($roleId)
     {
         $roleId = (string) $roleId;
-
-        $select = $this->getSelect($this->zfcUserOptions->getTableName());
-        $select->where(array($this->tableGateway->getTable() . '.role_id' => $roleId));
-        $select->join(
-            $this->tableGateway->getTable(),
-            $this->tableGateway->getTable(). '.user_id = ' . $this->zfcUserOptions->getTableName(). '.user_id',
-            array(),
-            Select::JOIN_INNER
-        );
-        $select->group($this->userTableName. '.user_id');
+        $select = new Select();
+        $select->from($this->zfcUserOptions->getTableName())
+            ->join(
+                $this->tableGateway->getTable(),
+                $this->tableGateway->getTable() . '.user_id = ' . $this->zfcUserOptions->getTableName() . '.user_id', [],
+                Select::JOIN_INNER
+            )->where([
+            $this->tableGateway->getTable() . '.role_id' => $roleId
+        ])
+            ->group($this->zfcUserOptions->getTableName() . '.user_id');
 
         $entityPrototype = $this->zfcUserOptions()->getUserEntityClass();
 
-        return $this->select($select, new $entityPrototype, $this->getZfcUserHydrator());
+        $sql = new Sql($this->tableGateway->adapter, $this->zfcUserOptions->getTableName());
+        $stmt = $sql->prepareStatementForSqlObject($select);
+        $resultSet = new HydratingResultSet(
+            new UserHydrator,
+            new $entityPrototype()
+        );
+        return $resultSet->initialize($stmt->execute());
     }
 }
