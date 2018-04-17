@@ -77,19 +77,19 @@ class UserRoleLinkerTable implements UserRoleLinkerTableInterface
      */
     public function saveUserRoleLinker(UserRoleLinkerInterface $userRoleLinker)
     {
-        $data = [
-            'user_id' => $userRoleLinker->getUserId(),
-            'role_id' => $userRoleLinker->getRoleId(),
-        ];
-
-        $userId = (int) $userRoleLinker->UserId;
+        $userId = (int) $userRoleLinker->getUserId();
 
         if ($userId === 0) {
             throw new RuntimeException('Cannot handle user role linker with invalid user id');
         }
 
+        $data = [
+            'user_id' => $userId,
+            'role_id' => $userRoleLinker->getRoleId(),
+        ];
+
         try {
-            if ($this->getUserRoleLinker($userId, $userRoleLinker->Locale)) {
+            if ($this->getUserRoleLinker($userId, $userRoleLinker->getRoleId())) {
                 return;
             }
         } catch (RuntimeException $e) {

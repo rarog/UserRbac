@@ -34,7 +34,7 @@ class UserRoleLinkerTableTest extends TestCase
         $userRoleLinker = new UserRoleLinker();
         $userRoleLinker->exchangeArray([
             'user_id' => 123,
-            'role_id' => 'someRole'
+            'role_id' => 'someRole',
         ]);
 
         $resultSet = $this->prophesize(ResultSetInterface::class);
@@ -42,7 +42,7 @@ class UserRoleLinkerTableTest extends TestCase
 
         $this->tableGateway->select([
             'user_id' => 123,
-            'role_id' => 'someRole'
+            'role_id' => 'someRole',
         ])->willReturn($resultSet->reveal());
 
         $returnedResultSet = $this->userRoleLinkerTable->getUserRoleLinker(123, 'someRole');
@@ -57,7 +57,7 @@ class UserRoleLinkerTableTest extends TestCase
 
         $this->tableGateway->select([
             'user_id' => 123,
-            'role_id' => 'someRole'
+            'role_id' => 'someRole',
         ])->willReturn($resultSet->reveal());
 
         $this->expectException(RuntimeException::class);
@@ -65,7 +65,64 @@ class UserRoleLinkerTableTest extends TestCase
         $this->userRoleLinkerTable->getUserRoleLinker(123, 'someRole');
     }
 
-    public function testDdeleteUserRoleLinker()
+    public function testSaveUserRoleLinkerExceptionThrown()
+    {
+        $userRoleLinker = new UserRoleLinker();
+
+        $this->expectException(RuntimeException::class);
+        $this->expectExceptionMessage('Cannot handle user role linker with invalid user id');
+        $this->userRoleLinkerTable->saveUserRoleLinker($userRoleLinker);
+    }
+
+    public function testSaveUserRoleLinkerExceptionThrown2()
+    {
+        $userRoleLinker = new UserRoleLinker();
+        $userRoleLinker->setUserId(0);
+
+        $this->expectException(RuntimeException::class);
+        $this->expectExceptionMessage('Cannot handle user role linker with invalid user id');
+        $this->userRoleLinkerTable->saveUserRoleLinker($userRoleLinker);
+    }
+
+    public function testSaveUserRoleLinkerDataExistsNoInsert()
+    {
+        $userRoleLinkerData = [
+            'user_id' => 123,
+            'role_id' => 'someRole',
+        ];
+
+        $userRoleLinker = new UserRoleLinker();
+        $userRoleLinker->exchangeArray($userRoleLinkerData);
+
+        $resultSet = $this->prophesize(ResultSetInterface::class);
+        $resultSet->current()->willReturn($userRoleLinker);
+
+        $this->tableGateway->select($userRoleLinkerData)->willReturn($resultSet->reveal());
+        $this->tableGateway->insert($this->anything())->shouldNotBeCalled();
+
+        $this->userRoleLinkerTable->saveUserRoleLinker($userRoleLinker);
+    }
+
+    public function testSaveUserRoleLinkerDataInsert()
+    {
+        $userRoleLinkerData = [
+            'user_id' => 123,
+            'role_id' => 'someRole',
+        ];
+
+        $userRoleLinker = new UserRoleLinker();
+        $userRoleLinker->exchangeArray($userRoleLinkerData);
+
+        $resultSet = $this->prophesize(ResultSetInterface::class);
+        $resultSet->current()->willReturn(null);
+
+        $this->tableGateway->select($userRoleLinkerData)->willReturn($resultSet->reveal());
+        $this->tableGateway->insert($userRoleLinkerData)->shouldBeCalled();
+
+        $this->userRoleLinkerTable->saveUserRoleLinker($userRoleLinker);
+    }
+
+    public function testDeleteUserRoleLinker()
     {
         $this->tableGateway->delete([
             'user_id' => 123,
