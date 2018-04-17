@@ -94,7 +94,6 @@ class UserRoleLinkerTable implements UserRoleLinkerTableInterface
             }
         } catch (RuntimeException $e) {
             $this->tableGateway->insert($data);
-            return;
         }
     }
 
