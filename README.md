@@ -15,7 +15,8 @@ Please use below table to figure out what version of ZfcUser you should use.
 
 | UserRbac version | Supported Zend Framework version |
 |------------------|----------------------------------|
-| 1.x              | >=        3.x                    |
+| 0.x              | <= 2.5                           |
+| 1.x              | >= 2.6 < 3                       |
 
 ## Features
 1. No need to write code for integrating ZfcUser and ZfcRbac
