@@ -26,7 +26,7 @@ Please use below table to figure out what version of ZfcUser you should use.
 3. Addition of `SmartRedirectStrategy`
 
 ## Installation
-* Add `"rarog/user-rbac": "dev-master",` to your composer.json and run `php composer.phar update`
+* Add `"rarog/user-rbac": "^2.0",` to your composer.json and run `php composer.phar update`
 * Import the schema for corresponding database in `data` folder
 * Enable this module in `config/application.config.php`
 * Copy file located in `vendor/rarog/user-rbac/config/user-rbac.global.php.dist` to `./config/autoload/user-rbac.global.php` and change the values as you wish.
