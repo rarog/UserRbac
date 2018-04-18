@@ -172,10 +172,13 @@ class UserRoleLinkerTable implements UserRoleLinkerTableInterface
 
         $statement = $this->getPreparedSelectStatementToFindByRoleId($roleId);
 
+        $entityPrototype = $this->zfcUserOptions->getUserEntityClass();
+
         $resultSet = new HydratingResultSet(
             new UserHydrator(),
-            new $entityPrototype($this->zfcUserOptions()->getUserEntityClass())
+            new $entityPrototype
         );
+
         return $resultSet->initialize($statement->execute());
     }
 }

@@ -2,9 +2,13 @@
 namespace UserRbacTest\Model;
 
 use PHPUnit\Framework\TestCase;
+use Prophecy\Argument;
 use UserRbac\Model\UserRoleLinker;
 use UserRbac\Model\UserRoleLinkerTable;
+use Zend\Db\Adapter\Adapter;
+use Zend\Db\Adapter\StatementContainer;
 use Zend\Db\Adapter\Driver\DriverInterface;
+use Zend\Db\Adapter\Driver\StatementInterface;
 use Zend\Db\Adapter\Platform\Sql92;
 use Zend\Db\ResultSet\ResultSetInterface;
 use Zend\Db\TableGateway\TableGateway;
@@ -29,20 +33,39 @@ class UserRoleLinkerTableTest extends TestCase
         $this->tableGateway = $this->prophesize(TableGateway::class);
         $this->tableGateway->getTable()->willReturn('user_role_linker');
 
-        $mockDriver = $this->getMockBuilder(DriverInterface::class)->getMock();
-        $mockDriver->expects($this->any())->method('formatParameterName')->will($this->returnValue('?'));
-        $mockDriver->expects($this->any())
+        $internalStatement = new StatementContainer();
+
+        $statement = $this->prophesize(StatementInterface::class);
+        $this->statement = $statement;
+        $this->statement->getParameterContainer()->will(
+            function () use ($internalStatement) {
+                return $internalStatement->getParameterContainer();
+            });
+        $this->statement->getSql()->will(
+            function () use ($internalStatement) {
+                return $internalStatement->getSql();
+            });
+        $this->statement->setSql(Argument::any())->will(
+            function ($args) use ($internalStatement) {
+                return $internalStatement->setSql($args[0]);
+            });
+
+        $this->mockDriver = $this->getMockBuilder(DriverInterface::class)->getMock();
+        $this->mockDriver->expects($this->any())
+            ->method('formatParameterName')
+            ->will($this->returnValue('?'));
+        $this->mockDriver->expects($this->any())
             ->method('createStatement')
-            ->will($this->returnCallback(function () {
-            return new \Zend\Db\Adapter\StatementContainer();
-        }));
-        $adapter = new \Zend\Db\Adapter\Adapter($mockDriver, new Sql92());
+            ->will(
+            $this->returnCallback(
+                function () use ($statement) {
+                    return $this->statement->reveal();
+                }));
+
+        $adapter = new Adapter($this->mockDriver, new Sql92());
         $this->tableGateway->getAdapter()->willReturn($adapter);
 
-        $this->userRoleLinkerTable = new UserRoleLinkerTable(
-            $this->tableGateway->reveal(),
-            new ZfcUserModuleOptions()
-        );
+        $this->userRoleLinkerTable = new UserRoleLinkerTable($this->tableGateway->reveal(), new ZfcUserModuleOptions());
     }
 
     public function testFetchAll()
@@ -196,5 +219,34 @@ class UserRoleLinkerTableTest extends TestCase
         $statement2 = $getPreparedSelectStatementToFindByRoleId->invokeArgs($this->userRoleLinkerTable, ['role2']);
         $this->assertEquals($expectedPreparedStatement, $statement2->getSql());
         $this->assertEquals($expectedParameterArray2, $statement2->getParameterContainer()->getNamedArray());
+    }
+
+    public function testFindByRoleId()
+    {
+        $expectedResult = [
+            [
+                'user_id' => 13,
+                'username' => 'User 13',
+            ],
+            [
+                'user_id' => 31,
+                'username' => 'User 31',
+            ],
+        ];
+
+        $this->statement->execute()->willReturn($expectedResult);
+
+        $result = $this->userRoleLinkerTable->findByRoleId('role1');
+        $this->assertEquals(count($expectedResult), count($result));
+
+        $i = 0;
+        foreach ($result as $row) {
+            $this->assertInstanceOf(User::class, $row);
+
+            $this->assertEquals($expectedResult[$i]['user_id'], $row->getId());
+            $this->assertEquals($expectedResult[$i]['username'], $row->getUsername());
+
+            $i++;
+        }
     }
 }
