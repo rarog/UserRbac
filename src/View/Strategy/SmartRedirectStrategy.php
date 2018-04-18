@@ -24,7 +24,6 @@ class SmartRedirectStrategy extends AbstractStrategy
     }
 
     /**
-     *
      * If user is logged in, it calls UnauthorizedStrategy otherwise it calls RedirectStrategy
      *
      * @param  MvcEvent $event
