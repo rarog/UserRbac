@@ -16,7 +16,9 @@ Please use below table to figure out what version of ZfcUser you should use.
 
 | UserRbac version | Supported Zend Framework version |
 |------------------|----------------------------------|
-| 1.x              | >=        3.x                    |
+| 0.x              | <= 2.5                           |
+| 1.x              | >= 2.6 < 3                       |
+| 2.x              | >= 3.x                           |
 
 ## Features
 1. No need to write code for integrating ZfcUser and ZfcRbac
@@ -46,11 +48,12 @@ This module comes with a new strategy called `SmartRedirectStrategy`. This simpl
 ```php
 public function onBootstrap(EventInterface $e)
 {
-    $t = $e->getTarget();
-
-    $t->getEventManager()->attach(
-        $t->getServiceManager()->get('UserRbac\View\Strategy\SmartRedirectStrategy')
-    );
+    $app = $e->getApplication();
+    $sm = $app->getServiceManager();
+    $em = $app->getEventManager();
+    
+    $listener = $sm->get(\UserRbac\View\Strategy\SmartRedirectStrategy::class);
+    $listener->attach($em);
 }
 ```
 
