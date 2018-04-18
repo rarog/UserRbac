@@ -4,9 +4,10 @@ namespace UserRbacTest\Model;
 use PHPUnit\Framework\TestCase;
 use UserRbac\Model\UserRoleLinker;
 use UserRbac\Model\UserRoleLinkerTable;
-use Zend\Db\Adapter\Platform\Sql92 as Sql92Plattform;
+use Zend\Db\Adapter\Driver\DriverInterface;
+use Zend\Db\Adapter\Platform\Sql92;
 use Zend\Db\ResultSet\ResultSetInterface;
-use Zend\Db\TableGateway\TableGatewayInterface;
+use Zend\Db\TableGateway\TableGateway;
 use ZfcUser\Entity\User;
 use ZfcUser\Options\ModuleOptions as ZfcUserModuleOptions;
 use ReflectionClass;
@@ -25,7 +26,19 @@ class UserRoleLinkerTableTest extends TestCase
 
     protected function setUp()
     {
-        $this->tableGateway = $this->prophesize(TableGatewayInterface::class);
+        $this->tableGateway = $this->prophesize(TableGateway::class);
+        $this->tableGateway->getTable()->willReturn('user_role_linker');
+
+        $mockDriver = $this->getMockBuilder(DriverInterface::class)->getMock();
+        $mockDriver->expects($this->any())->method('formatParameterName')->will($this->returnValue('?'));
+        $mockDriver->expects($this->any())
+            ->method('createStatement')
+            ->will($this->returnCallback(function () {
+            return new \Zend\Db\Adapter\StatementContainer();
+        }));
+        $adapter = new \Zend\Db\Adapter\Adapter($mockDriver, new Sql92());
+        $this->tableGateway->getAdapter()->willReturn($adapter);
+
         $this->userRoleLinkerTable = new UserRoleLinkerTable(
             $this->tableGateway->reveal(),
             new ZfcUserModuleOptions()
@@ -164,21 +177,24 @@ class UserRoleLinkerTableTest extends TestCase
         }
     }
 
-    public function testGetSelectToFindByRoleId()
+    public function testGetPreparedSelectStatementToFindByRoleId()
     {
-        $this->tableGateway->getTable()->willReturn('user_role_linker');
-        $getSqlToFindByRoleId = $this->getMethod(UserRoleLinkerTable::class, 'getSelectToFindByRoleId');
-        $plattform = new Sql92Plattform();
+        $getPreparedSelectStatementToFindByRoleId = $this->getMethod(UserRoleLinkerTable::class, 'getPreparedSelectStatementToFindByRoleId');
 
-        // AbstractPlatform::quoteValue is throwing errors. This will suppress them.
-        set_error_handler(function($errno, $errstr, $errfile, $errline, $errcontext){});
+        $expectedPreparedStatement = 'SELECT "user".* FROM "user" INNER JOIN "user_role_linker" ON "user_role_linker"."user_id" = "user"."user_id" WHERE "user_role_linker"."role_id" = ? GROUP BY "user"."user_id"';
+        $expectedParameterArray1 = [
+            'where1' => 'role1',
+        ];
+        $expectedParameterArray2 = [
+            'where1' => 'role2',
+        ];
 
-        $select1 = $getSqlToFindByRoleId->invokeArgs($this->userRoleLinkerTable, ['role1']);
-        $this->assertEquals('SELECT "user".* FROM "user" INNER JOIN "user_role_linker" ON "user_role_linker"."user_id" = "user"."user_id" WHERE "user_role_linker"."role_id" = \'role1\' GROUP BY "user"."user_id"', $select1->getSqlString($plattform));
+        $statement1 = $getPreparedSelectStatementToFindByRoleId->invokeArgs($this->userRoleLinkerTable, ['role1']);
+        $this->assertEquals($expectedPreparedStatement, $statement1->getSql());
+        $this->assertEquals($expectedParameterArray1, $statement1->getParameterContainer()->getNamedArray());
 
-        $select2 = $getSqlToFindByRoleId->invokeArgs($this->userRoleLinkerTable, ['role2']);
-        $this->assertEquals('SELECT "user".* FROM "user" INNER JOIN "user_role_linker" ON "user_role_linker"."user_id" = "user"."user_id" WHERE "user_role_linker"."role_id" = \'role2\' GROUP BY "user"."user_id"', $select2->getSqlString($plattform));
-
-        restore_error_handler();
+        $statement2 = $getPreparedSelectStatementToFindByRoleId->invokeArgs($this->userRoleLinkerTable, ['role2']);
+        $this->assertEquals($expectedPreparedStatement, $statement2->getSql());
+        $this->assertEquals($expectedParameterArray2, $statement2->getParameterContainer()->getNamedArray());
     }
 }
