@@ -26,12 +26,12 @@ class UserRoleLinkerTable implements UserRoleLinkerTableInterface
     protected $zfcUserOptions;
 
     /**
-     * Creates Select to find users with a specific role
+     * Creates a prepared select statement to find users with a specific role
      *
      * @param  string $roleId
-     * @return \Zend\Db\Sql\Select
+     * @return \Zend\Db\Adapter\Driver\StatementInterface
      */
-    protected function getSelectToFindByRoleId($roleId)
+    protected function getPreparedSelectStatementToFindByRoleId($roleId)
     {
         $select = new Select();
         $select->from($this->zfcUserOptions->getTableName())
@@ -43,7 +43,9 @@ class UserRoleLinkerTable implements UserRoleLinkerTableInterface
         ])
             ->group($this->zfcUserOptions->getTableName() . '.user_id');
 
-        return $select;
+        $sql = new Sql($this->tableGateway->getAdapter());
+
+        return $sql->prepareStatementForSqlObject($select);
     }
 
     /**
@@ -168,16 +170,12 @@ class UserRoleLinkerTable implements UserRoleLinkerTableInterface
     {
         $roleId = (string) $roleId;
 
-        $select = $this->getSelectToFindByRoleId($roleId);
+        $statement = $this->getPreparedSelectStatementToFindByRoleId($roleId);
 
-        $entityPrototype = $this->zfcUserOptions()->getUserEntityClass();
-
-        $sql = new Sql($this->tableGateway->adapter, $this->zfcUserOptions->getTableName());
-        $stmt = $sql->prepareStatementForSqlObject($select);
         $resultSet = new HydratingResultSet(
-            new UserHydrator,
-            new $entityPrototype()
+            new UserHydrator(),
+            new $entityPrototype($this->zfcUserOptions()->getUserEntityClass())
         );
-        return $resultSet->initialize($stmt->execute());
+        return $resultSet->initialize($statement->execute());
     }
 }
