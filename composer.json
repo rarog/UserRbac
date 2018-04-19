@@ -20,7 +20,7 @@
 	],
 	"require" : {
 		"php" : "^5.6 || ^7.0",
-		"zf-commons/zfc-user" : "^2.0",
+		"zf-commons/zfc-user" : "2.x-dev",
 		"zf-commons/zfc-rbac" : "^2.5"
 	},
 	"require-dev" : {
